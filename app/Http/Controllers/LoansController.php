@@ -54,8 +54,11 @@ class LoansController extends Controller
     public function show($id)
     {
         //
+        $clients = Loan::find($id)->clients;
+       
+
         $loan = Loan::find($id);
-        return view('loan.show',compact('loan'));
+        return view('loan.show',compact('loan','clients'));
     }
 
     /**

@@ -9,7 +9,16 @@ class Client extends Model
     //
     protected $fillable = ['name','address','contact'];
 
-    public function loans(){
-    	return $this->belongsToMany('App\Loan');
+    public function types(){
+    	//return $this->belongsToMany('App\Loan');
+
+    	return $this->hasManyThrough(
+    		'App\Type',
+    		'App\Loan', 
+    		'client_id', 
+    		'id',
+    		'id',
+    		'type_id'
+    	);
     }
 }

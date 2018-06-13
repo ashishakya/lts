@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Type;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +12,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        //$this->call(TypeTableSeeder::class);
+          	Type::insert([
+			'name'=>str_random(10),
+		     	'rate'=>rand(0,1)
+		     ]);    	
     }
 }
