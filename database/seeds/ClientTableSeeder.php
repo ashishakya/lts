@@ -13,11 +13,13 @@ class ClientTableSeeder extends Seeder
     public function run()
     {
         //
-        Client::insert([
-	        'name'=>str_random(10),
-	        'address' => str_random(10),
-	       	'address'=>str_random(10),
-	       	'contact'=>rand(1111111,9999999)
+        for($i=1;$i<=10;$i++){
+            Client::insert([
+            'name'=>str_random(10),
+            'address' => str_random(10),
+            'contact'=>rand(1111111,9999999)
          ]);  
+        }
+       
     }
 }

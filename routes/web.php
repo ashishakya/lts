@@ -9,17 +9,17 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
-use App\Loan;
+ */
 use App\Client;
+use App\Loan;
 use App\Type;
 
 Route::get('/', function () {
-    return view('welcome');
+	return view('welcome');
 });
 
-// belongsToMany:returns list of clients name for specific loan 
-Route::get('loan/client',function(){
+// belongsToMany:returns list of clients name for specific loan
+Route::get('loan/client', function () {
 	$loan = Loan::find(1);
 	foreach ($loan->clients as $client) {
 		echo $client->name . ' ';
@@ -27,42 +27,69 @@ Route::get('loan/client',function(){
 	}
 });
 
-// belongsToMany:returns list of loans taken by specific client 
-Route::get('client/loan',function(){
+// belongsToMany:returns list of loans taken by specific client
+Route::get('client/loan', function () {
 	$client = Client::find(1);
 	return $client->loans;
 });
 
-
 //testing hasManyThrough:
-Route::get('getClients',function(){
+Route::get('getClients', function () {
 	$type = Type::find(1);
 	return $type->clients;
 });
 
 //testing hasManyThrough:
-Route::get('getLoanType',function(){
+Route::get('getLoanType', function () {
 	$client = Client::find(1);
 	return $client->types;
 });
 
-
 //return clients
-Route::get('/readClient',function(){
+Route::get('/readClient', function () {
 	return Type::find(1)->clients()->toSql();
 });
 
 //return loans
-Route::get('/readType',function(){
-	 //return Client::find(1)->types()->toSql();
+Route::get('/readType', function () {
+	//return Client::find(1)->types()->toSql();
 	return Client::find(1)->types;
 });
 
+//create loan
+Route::get('/createLoan', function () {
+	$client_id = Client::find(1)->id;
+	$type = Type::find(2);
+	$type_id = $type->id;
+	$interest = $type->rate;
 
+	Loan::create([
+		'client_id' => $client_id,
+		'type_id' => $type_id,
+		'amount' => 100000,
+		'interest' => $interest,
+	]);
+});
 
+//client hasMany loans
+Route::get('client/allLoan', function () {
+	$client = Client::find(1);
+	foreach ($client->loans as $loan) {
+		# code...
+		echo $loan . '<br><br>';
+	}
+});
 
-Route::group(['middleware'=>'web'],function(){
+//loan hasMany payments
+Route::get('loan/allPayment', function () {
+	$loan = Loan::find(2);
+	return $loan->payments;
+});
 
-	Route::resource('types','LoansController');	
+Route::group(['middleware' => 'web'], function () {
+
+	Route::resource('types', 'TypesController');
+	Route::resource('clients', 'ClientsController');
+	Route::resource('loans', 'LoansController');
 
 });

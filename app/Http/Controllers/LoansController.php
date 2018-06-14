@@ -2,104 +2,106 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests\Loan\CreateLoanRequest;
+use App\Client;
 use App\Loan;
+use App\Type;
+use Illuminate\Http\Request;
 
-class LoansController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-        $loans = Loan::all();
-        return view('loan.index',compact('loans'));
-    }
+class LoansController extends Controller {
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	protected $loan, $client, $type;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-        return view('loan.create');
-    }
+	public function __construct(Loan $loan, Client $client, Type $type) {
+		$this->loan = $loan;
+		$this->client = $client;
+		$this->type = $type;
+	}
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(CreateLoanRequest $request)
-    {
-        
-        Loan::create($request->all());
-        return redirect('/loans');
-        //echo $request->type . ' ' . $request->rate;
-    }
+	public function index() {
+		$loans = $this->loan::all();
+		return view('loan.index', compact('loans'));
+		//return 'this is index method';
+	}
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-        $clients = Loan::find($id)->clients;
-       
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function create() {
+		$clients = $this->client->all()->pluck('name', 'id');
+		$types = $this->type->all()->pluck('name', 'id');
+		return view('loan.create', compact('clients', 'types'));
+	}
 
-        $loan = Loan::find($id);
-        return view('loan.show',compact('loan','clients'));
-    }
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function store(Request $request) {
+		// return 'this is store method';
+		$type_id = $request->type_id;
+		$attributes = $request->all();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-       // $loan = Loan::find($id);
-        //return view('loan.edit');
-        $loan = Loan::find($id);
-        return view('loan.edit',compact('loan'));
-    }
+		// since interest rate is not shown in create form, we calculate here
+		$interest = $this->type::find($type_id)->rate;
+		$attributes['interest'] = $interest;
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(CreateLoanRequest $request, $id)
-    {
-        //
-        Loan::find($id)->update($request->all());
-        return redirect('/loans');
-    }
+		$this->loan->create($attributes);
+		return redirect()->route('loans.index');
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        
-        Loan::find($id)->delete();
-        return redirect('/loans');
-    }
+	}
+
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function show($id) {
+		//
+
+		return 'this is show method';
+	}
+
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function edit($id) {
+		//
+		return 'this is edit method';
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function update(Request $request, $id) {
+		//
+		return 'this is update method';
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy($id) {
+		//
+
+		return 'this is destroy method';
+	}
 }

@@ -9,6 +9,8 @@ class Client extends Model
     //
     protected $fillable = ['name','address','contact'];
 
+
+    
     public function types(){
     	//return $this->belongsToMany('App\Loan');
 
@@ -20,5 +22,12 @@ class Client extends Model
     		'id',
     		'type_id'
     	);
+
+
+    }
+
+
+    public function loans(){
+        return $this->hasMany('App\Loan');
     }
 }
