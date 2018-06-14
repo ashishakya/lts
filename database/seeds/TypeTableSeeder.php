@@ -11,10 +11,10 @@ class TypeTableSeeder extends Seeder
      */
     public function run()
     {
-        //
-        //factory(Type::class,10)->create();
-      //  	
-        
+        	Type::insert([
+            'name'=>str_random(10),
+                'rate'=>rand(0,1)
+             ]);          
     }
  
 }

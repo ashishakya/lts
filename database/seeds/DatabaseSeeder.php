@@ -12,10 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //$this->call(TypeTableSeeder::class);
-          	Type::insert([
-			'name'=>str_random(10),
-		     	'rate'=>rand(0,1)
-		     ]);    	
+        $this->call(TypeTableSeeder::class);
+         $this->call(ClientTableSeeder::class);  	  	
     }
 }

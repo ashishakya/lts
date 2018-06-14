@@ -63,6 +63,6 @@ Route::get('/readType',function(){
 
 Route::group(['middleware'=>'web'],function(){
 
-	Route::resource('loans','LoansController');	
+	Route::resource('types','LoansController');	
 
 });
