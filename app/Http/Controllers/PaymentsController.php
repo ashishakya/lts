@@ -2,26 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Type;
+use App\Loan;
+use App\Payment;
 use Illuminate\Http\Request;
 
-class TypesController extends Controller {
-
-	protected $type;
-
-	public function __construct(Type $type) {
-		$this->type = $type;
-	}
+class PaymentsController extends Controller {
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
+	// protected $loan;
+
+	// public function __construct(Loan $loan) {
+	// 	$this->loan = $loan;
+	// }
+	protected $loan, $payment;
+
+	public function __construct(Loan $loan, Payment $payment) {
+		$this->loan = $loan;
+		$this->payment = $payment;
+	}
 	public function index() {
 
-		$types = $this->type->orderBy('id','asc')->get();
-
-		return view('type.index', compact('types'));
+		//
+		$payments = $this->payment->all();
+		return view('payment.index', compact('payments'));
 
 	}
 
@@ -31,7 +37,11 @@ class TypesController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create() {
-		return view('type.create');
+		//
+		$loans_id = $this->loan->all()->pluck('id', 'id'); //first pa
+		return view('payment.create', compact('loans_id'));
+
+		//$clients = $this->client->all()->pluck('name', 'id');
 	}
 
 	/**
@@ -41,19 +51,13 @@ class TypesController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(Request $request) {
+		//
+		$attribute = $request->all();
+		$attribute['client_id'] = $this->loan->find($attribute['loan_id'])->client_id;
+		$attribute['type_id'] = $this->loan->find($attribute['loan_id'])->type_id;
+		Payment::create($attribute);
+		return redirect()->route('payments.index');
 
-		try {
-			$attributes = $request->all();
-
-			$this->type->create($attributes);
-
-		} catch (\Exception $exception) {
-			logger()->error($exception);
-
-			return back()->withInput()->withError('Failed to create type.');
-		}
-
-		return redirect()->route('types.index');
 	}
 
 	/**
@@ -63,24 +67,17 @@ class TypesController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function show($id) {
-
-		try {
-			$type = $this->type->find($id);
-		} catch (ModelNotFoundException $modelNotFoundException) {}
-		return view('type.show', compact('type'));
+		//
 	}
 
-	/*
-		 * Show the form for editing the specified resource.
-		 *
-		 * @param  int  $id
-		 * @return \Illuminate\Http\Response
-	*/
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
 	public function edit($id) {
 		//
-		// return 'this is edit method';
-		$type = Type::find($id);
-		return view('type.edit', compact('type'));
 	}
 
 	/**
@@ -92,8 +89,6 @@ class TypesController extends Controller {
 	 */
 	public function update(Request $request, $id) {
 		//
-		Type::find($id)->update($request->all());
-		return redirect('/types');
 	}
 
 	/**
@@ -103,7 +98,6 @@ class TypesController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function destroy($id) {
-		Type::find($id)->delete();
-		return redirect('/types');
+		//
 	}
 }

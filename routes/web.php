@@ -91,5 +91,8 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('types', 'TypesController');
 	Route::resource('clients', 'ClientsController');
 	Route::resource('loans', 'LoansController');
+	Route::resource('payments', 'PaymentsController');
+
+	Route::get('getPaymentsByLoanId/{id}', 'LoansController@getPaymentsByLoanId')->name('loans.getById');
 
 });

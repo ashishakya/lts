@@ -2,32 +2,44 @@
 
 @section('content')
 
-<?php use App\Client;?>
-<?php use App\Type;?>
-
-
-
-<h1>this is Index.blade.php</h1><hr>
+<h1>this is Index.blade.php [List of Loans taken]</h1><hr>
 <table border="1">
 	<tr>
 		<th>Loan Id</th>
 		<th>Client Id</th>
+		<th>Client Name</th>
 		<th>Type Id</th>
+		<th>Type Name</th>
 		<th>Amount</th>
 		<th>Interest Rate</th>
+		<th>Action</th>
 	</tr>
 	@foreach($loans as $loan)
 		<tr>
 			<td>{{$loan->id}}</td>
+			<td>{{$loan->clients->id}}</td>
+			<td><a href="{{route('clients.show',$loan->clients->id)}}">{{$loan->clients->name}}</a></td>
 
-
-			<!-- <td>{{$loan->client_id}}</td> -->
-			<td>{{Client::find($loan->client_id)->name}}</td>
-
-			<td>{{$loan->type_id}}</td>
+			<td>{{$loan->types->id or ''}}</td>
+			<td>{{$loan->types->name or ''}}</td>
 
 			<td>{{$loan->amount}}</td>
 			<td>{{$loan->interest}}</td>
+
+			<!--<td><a href="{{route('loans.getById',$loan->id)}}">View Payments</a></td>-->
+
+		
+
+		<!-- checks realation with payments	 -->
+
+			@if($loan->payments()->exists())
+				<td><a href="{{route('loans.getById',$loan->id)}}">View Payments</a></td>
+			@else
+				<td>NO PAYMENTS</td>
+			@endif
+		
+
+
 		</tr>
 	@endforeach
 

@@ -7,10 +7,12 @@
 
 {!! Form::open(['method'=>'POST','action'=>'TypesController@store']) !!}
 
+	{!! Form::label('name','Loan Type: ')!!}
 	{!! Form::text('name',null,['placeholder'=>'Loan Type'])!!}{{$errors->first('type')}}<br>
-	
+
+	{!! Form::label('rate','Interest Rate: ')!!}
 	{!! Form::text('rate',null,['placeholder'=>'Rate'])!!}{{$errors->first('rate')}}<br>
-	
+
 	{!! Form::submit('Save New Loan Type')!!}
 	{!! Form::reset('Reset')!!}
 {!! Form::close()!!}

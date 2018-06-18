@@ -9,18 +9,26 @@ class Loan extends Model {
 	protected $fillable = ['client_id', 'type_id', 'amount', 'interest', 'issue_id', 'payment_id'];
 
 	public function clients() {
-		return $this->belongsToMany('App\Client');
+		return $this->belongsTo('App\Client', 'client_id', 'id');
+	}
+
+	public function types() {
+		return $this->belongsTo('App\Type', 'type_id', 'id');
 	}
 
 	public function payments() {
+		//return $this->hasMany('App\Payment', 'payment_id', 'id');
 		return $this->hasMany('App\Payment');
 	}
 
-	public function getInterestAttribute($value) {
-		return $value . '%';
+	/*	
+	public function getInterestPercentageAttribute() {
+		return sprintf('%s%',$this->intrest);
 	}
-
-	public function getAmountAttribute($value) {
-		return 'Rs.' . $value . '/-';
+	
+	 public function getAmountRsAttribute() {
+		return sprintf('Rs. %s/-', $this->amount);
 	}
+	*/
+	
 }

@@ -4,7 +4,11 @@
 
 <h1>This is show.blade.php</h1>
 <hr>
+<strong>
+{{$client->id}}<br>
+{{$client->name}}<br>
+{{$client->address}}<br>
+{{$client->contact}}<br>
 
-<h1><a href="{{route('types.edit',$type->id)}}">{{$type->name}}</a></h1>
-
+</strong>
 @endsection('content')

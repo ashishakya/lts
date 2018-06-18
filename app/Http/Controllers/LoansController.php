@@ -22,9 +22,13 @@ class LoansController extends Controller {
 	}
 
 	public function index() {
-		$loans = $this->loan::all();
+
+		// $loans = $this->loan->all();
+		$loans = $this->loan->with(['clients', 'types','payments'])->get();
 		return view('loan.index', compact('loans'));
 		//return 'this is index method';
+		//
+
 	}
 
 	/**
@@ -35,6 +39,9 @@ class LoansController extends Controller {
 	public function create() {
 		$clients = $this->client->all()->pluck('name', 'id');
 		$types = $this->type->all()->pluck('name', 'id');
+		//$types = $this->type->distinct('name')->get()->toArray();
+
+		//dd($types);
 		return view('loan.create', compact('clients', 'types'));
 	}
 
@@ -103,5 +110,11 @@ class LoansController extends Controller {
 		//
 
 		return 'this is destroy method';
+	}
+
+	public function getPaymentsByLoanId($id) {
+		$loan = $this->loan->find($id);
+		$payments = $loan->payments()->get();
+		return view('loan.custom', compact('payments', 'loan'));
 	}
 }
