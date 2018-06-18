@@ -51,12 +51,55 @@ class PaymentsController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(Request $request) {
-		//
+		// loan bata loan_id and amount aauncha
 		$attribute = $request->all();
+		//finding last payment for last_date
+		$payment = $this->loan->find($attribute['loan_id'])->payments()->latest()->first();
+
+		//checking relation for deciding value of $late_date
+		$relation = $this->loan->find($attribute['loan_id'])->payments()->exists();
+
+		if ($relation) {
+			//return 'relation exists';
+			$last_date = $payment->created_at;
+		} else {
+			//return 'relation does not exists';
+			$last_date = $this->loan->find($attribute['loan_id'])->created_at;
+		}
+
+		//return $last_date;
+
 		$attribute['client_id'] = $this->loan->find($attribute['loan_id'])->client_id;
 		$attribute['type_id'] = $this->loan->find($attribute['loan_id'])->type_id;
+		$attribute['last_date'] = $last_date;
 		Payment::create($attribute);
 		return redirect()->route('payments.index');
+
+		/* tested in route
+
+			$loan = Loan::find($id);
+			//return $loan->client_id;
+			$relation = $loan->payments()->exists();
+			$payment = $loan->payments()->latest()->first();
+			//return $payment;
+
+			if($relation){
+				$last_date =  $payment->created_at;
+
+				//echo 'relation exists'. '<br>' . $payment->created_at;
+			}else{
+				$last_date = $loan->created_at;
+				//echo 'relation does not exists'.'<br>'.$loan->created_at;
+			}
+
+			Payment::create([
+					'amount'=>123,
+					'client_id'=>$loan->client_id,
+					'loan_id'=>$id,
+					'type_id'=>$loan->type_id,
+					'last_date'=>$last_date,
+				]);
+		*/
 
 	}
 

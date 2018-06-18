@@ -13,6 +13,7 @@
 use App\Client;
 use App\Loan;
 use App\Type;
+use App\Payment;
 
 Route::get('/', function () {
 	return view('welcome');
@@ -86,6 +87,38 @@ Route::get('loan/allPayment', function () {
 	return $loan->payments;
 });
 
+// for diff in date
+Route::get('/date/{id}',function($id){
+	$loan = Loan::find($id);
+	//return $loan->client_id;
+	$relation = $loan->payments()->exists();
+	$payment = $loan->payments()->latest()->first();
+	//return $payment;	
+	
+	if($relation){
+		$last_date =  $payment->created_at;	
+		
+		//echo 'relation exists'. '<br>' . $payment->created_at; 
+	}else{
+		$last_date = $loan->created_at;
+		//echo 'relation does not exists'.'<br>'.$loan->created_at;
+	}
+
+	//echo 'amount:123 '.'<br>'.'client_id: '.$loan->client_id.'<br>'.'loan_id: '.$id.'<br>'.'type_id: '. $loan->type_id.'<br>','last_date: '.$last_date;
+	
+	Payment::create([
+			'amount'=>123,
+			'client_id'=>$loan->client_id,
+			'loan_id'=>$id,
+			'type_id'=>$loan->type_id,
+			'last_date'=>$last_date,
+		]);
+		
+
+
+		//return view('loan.custom', compact('payments', 'loan'));
+});
+
 Route::group(['middleware' => 'web'], function () {
 
 	Route::resource('types', 'TypesController');
@@ -95,4 +128,5 @@ Route::group(['middleware' => 'web'], function () {
 
 	Route::get('getPaymentsByLoanId/{id}', 'LoansController@getPaymentsByLoanId')->name('loans.getById');
 
+	
 });

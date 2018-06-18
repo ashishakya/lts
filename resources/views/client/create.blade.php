@@ -2,7 +2,8 @@
 
 @section('content')
 
-<h1>This is create.blade.php</h1>
+<h1>This is create.blade.php [REGISTER NEW CLIENT]</h1>
+<a href="{{route('clients.index')}}">VIEW ALL ACTIVE CLIENTS</a>
 <hr>
 
 {!! Form::open(['method'=>'POST','action'=>'ClientsController@store']) !!}

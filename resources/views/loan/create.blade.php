@@ -2,8 +2,9 @@
 
 @section('content')
 
-<h1>This is create.blade.php</h1>
-<hr>
+<h1>This is create.blade.php [ISSUE NEW LOAN]</h1>
+<a href="{{route('loans.index')}}">VIEW ALL LOANS</a><hr>
+
 
 {!! Form::open(['method'=>'POST','action'=>'LoansController@store']) !!}
 	<!-- for client name -->

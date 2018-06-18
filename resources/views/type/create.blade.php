@@ -2,7 +2,8 @@
 
 @section('content')
 
-<h1>This is create.blade.php</h1>
+<h1>This is create.blade.php [REGISTER NEW LOAN TYPE]</h1>
+<a href="{{route('types.index')}}">VIEW ALL ACTIVE LOAN TYPES</a>
 <hr>
 
 {!! Form::open(['method'=>'POST','action'=>'TypesController@store']) !!}

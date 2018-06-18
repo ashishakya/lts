@@ -6,6 +6,7 @@ use App\Client;
 use App\Loan;
 use App\Type;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class LoansController extends Controller {
 	/**
@@ -113,8 +114,40 @@ class LoansController extends Controller {
 	}
 
 	public function getPaymentsByLoanId($id) {
+	// >>works perfectly
 		$loan = $this->loan->find($id);
 		$payments = $loan->payments()->get();
+		
 		return view('loan.custom', compact('payments', 'loan'));
+	
+
+		/* diff in date:: works 
+		$now = Carbon::today();
+		$later = Carbon::today()->addDays(10);
+		$diff = $later->diffInDays($now);
+		echo $now . '<br>' .$later . '<br>'.$diff;
+		*/
+
+
+		/* test
+		$loan = $this->loan->find($id);
+		$payments = $loan->payments()->get();
+		//return $date = $payments->find(1)->created_at;
+		$date = new Carbon($payments->find(1)->created_at);
+		$filteredDate = $date->toDateString();
+		var_dump($filteredDate);
+		$now = Carbon::now()->toDateString();
+		
+
+		
+
+		/* REFRENCE
+		$created = new Carbon($price->created_at);
+		$now = Carbon::now();
+		$difference = ($created->diff($now)->days < 1)
+		    ? 'today'
+		    : $created->diffForHumans($now);
+		*/
+
 	}
 }

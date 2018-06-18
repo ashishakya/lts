@@ -2,7 +2,8 @@
 
 @section('content')
 
-<h1>This is create.blade.php [Payment section]</h1>
+<h1>This is create.blade.php [[REGISTER NEW PAYEMENT]</h1>
+<a href="{{route('payments.index')}}">VIEW ALL PAYMENTS</a>
 <hr>
 
 {!! Form::open(['method'=>'POST','action'=>'PaymentsController@store']) !!}

@@ -23,8 +23,8 @@
 			<td>{{$loan->types->id or ''}}</td>
 			<td>{{$loan->types->name or ''}}</td>
 
-			<td>{{$loan->amount}}</td>
-			<td>{{$loan->interest}}</td>
+			<td>{{$loan->amount_rs}}</td>
+			<td>{{$loan->interest_rate}}</td>
 
 			<!--<td><a href="{{route('loans.getById',$loan->id)}}">View Payments</a></td>-->
 

@@ -18,7 +18,7 @@
 	@foreach($payments as $payment)
 		<tr>
 			<td>{{$payment->id}}</td>
-			<td>{{$payment->amount}}</a></td>
+			<td>{{$payment->amount_rs}}</a></td>
 			<td>{{$payment->loan_id}}</td>
 			<td>{{$payment->client_id}}</td>
 			<td>{{$payment->type_id}}</td>

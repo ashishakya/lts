@@ -13,7 +13,7 @@
 			<tr>
 				<td>{{$type->id}}</td>
 				<td>{{$type->name}}</td>
-				<td>{{$type->rate}}</td>
+				<td>{{$type->rate_percent}}</td>
 				<td><a href="{{route('types.edit',$type->id)}}">Edit</a></td>
 			</tr>
 		@endforeach
