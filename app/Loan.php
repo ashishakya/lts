@@ -21,24 +21,22 @@ class Loan extends Model {
 		return $this->hasMany('App\Payment');
 	}
 
-
-	public function getInterestRateAttribute(){
+	public function getInterestRateAttribute() {
 		//return sprintf('%s',$this->interest);
-		return $this->interest.'%';
+		return $this->interest . '%';
 	}
 
-	public function getAmountRsAttribute(){
-		return sprintf('Rs.%s/-',$this->amount);
+	public function getAmountRsAttribute() {
+		return sprintf('Rs.%s/-', $this->amount);
 	}
-	/*	
-	public function getInterestPercentageAttribute() {
-		return sprintf('%s%',$this->intrest);
-	}
+	/*
+		public function getInterestPercentageAttribute() {
+			return sprintf('%s%',$this->intrest);
+		}
 	*/
-	
+
 	/*public function getAmountRsAttribute() {
 		return sprintf('Rs. %s/-', $this->amount);
 	}*/
-	
-	
+
 }

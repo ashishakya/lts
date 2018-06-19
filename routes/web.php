@@ -12,8 +12,9 @@
  */
 use App\Client;
 use App\Loan;
-use App\Type;
 use App\Payment;
+use App\Type;
+use Carbon\Carbon;
 
 Route::get('/', function () {
 	return view('welcome');
@@ -87,36 +88,63 @@ Route::get('loan/allPayment', function () {
 	return $loan->payments;
 });
 
+//difference in carbon dates
+Route::get('dateTest/{id}', function ($id) {
+	$payment = Payment::find($id);
+	$created_date = $payment->created_at->startOfDay();
+	$createdDate = $payment->created_at->toDateString();
+	$lastDate = Carbon::parse($payment->last_date)->toDateString();
+	$last_date = (new Carbon($payment->last_date))->endOfDay();;
+
+	//dd($last_date);
+	dump($createdDate, $lastDate);
+	dd(Carbon::parse($createdDate)->diffInDays(Carbon::parse($lastDate)));
+	$diff = $last_date->diffInDays($created_date);
+	echo 'created date: ' . $created_date . '<br>' . 'last date: ' . $last_date . '<br>' . 'Diff ' . $diff;
+});
+
 // for diff in date
-Route::get('/date/{id}',function($id){
+Route::get('/date/{id}', function ($id) {
 	$loan = Loan::find($id);
 	//return $loan->client_id;
 	$relation = $loan->payments()->exists();
 	$payment = $loan->payments()->latest()->first();
-	//return $payment;	
-	
-	if($relation){
-		$last_date =  $payment->created_at;	
-		
-		//echo 'relation exists'. '<br>' . $payment->created_at; 
-	}else{
+	//return $payment;
+
+	if ($relation) {
+		$last_date = $payment->created_at;
+
+		//echo 'relation exists'. '<br>' . $payment->created_at;
+	} else {
 		$last_date = $loan->created_at;
 		//echo 'relation does not exists'.'<br>'.$loan->created_at;
 	}
 
-	//echo 'amount:123 '.'<br>'.'client_id: '.$loan->client_id.'<br>'.'loan_id: '.$id.'<br>'.'type_id: '. $loan->type_id.'<br>','last_date: '.$last_date;
-	
 	Payment::create([
-			'amount'=>123,
-			'client_id'=>$loan->client_id,
-			'loan_id'=>$id,
-			'type_id'=>$loan->type_id,
-			'last_date'=>$last_date,
-		]);
-		
+		'amount' => 123,
+		'client_id' => $loan->client_id,
+		'loan_id' => $id,
+		'type_id' => $loan->type_id,
+		'last_date' => $last_date,
+	]);
 
+	//echo 'amount:123 '.'<br>'.'client_id: '.$loan->client_id.'<br>'.'loan_id: '.$id.'<br>'.'type_id: '. $loan->type_id.'<br>','last_date: '.$last_date;
 
-		//return view('loan.custom', compact('payments', 'loan'));
+	//return view('loan.custom', compact('payments', 'loan'));
+});
+
+// for diff in principal amount:
+Route::get('diffInAmount/{id}', function ($id) {
+	$loan = Loan::find($id);
+	$payment = $loan->payments()->latest()->first();
+	$relation = $loan->payments()->exists();
+	if ($relation) {
+		echo 'relation exists' . '<br>';
+		echo 'last payment= ' . $pbp = $payment->amount . '<br>';
+	} else {
+		echo 'realtion does not exists';
+		echo 'last payment= ' . $pbp = $loan->amount;
+	}
 });
 
 Route::group(['middleware' => 'web'], function () {
@@ -128,5 +156,4 @@ Route::group(['middleware' => 'web'], function () {
 
 	Route::get('getPaymentsByLoanId/{id}', 'LoansController@getPaymentsByLoanId')->name('loans.getById');
 
-	
 });

@@ -62,9 +62,11 @@ class PaymentsController extends Controller {
 		if ($relation) {
 			//return 'relation exists';
 			$last_date = $payment->created_at;
+			$pbp = $payment->pap;
 		} else {
 			//return 'relation does not exists';
 			$last_date = $this->loan->find($attribute['loan_id'])->created_at;
+			$pbp = $this->loan->find($attribute['loan_id'])->amount;
 		}
 
 		//return $last_date;
@@ -72,34 +74,27 @@ class PaymentsController extends Controller {
 		$attribute['client_id'] = $this->loan->find($attribute['loan_id'])->client_id;
 		$attribute['type_id'] = $this->loan->find($attribute['loan_id'])->type_id;
 		$attribute['last_date'] = $last_date;
+		//$attribute['last_date'] = Carbon::parse($last_date);
+
+		$attribute['pbp'] = $pbp;
+		$attribute['pap'] = $pbp - $attribute['amount'];
+
 		Payment::create($attribute);
-		return redirect()->route('payments.index');
+		return redirect()->route('loans.index');
 
-		/* tested in route
-
+		/* amount diff in route:
 			$loan = Loan::find($id);
-			//return $loan->client_id;
-			$relation = $loan->payments()->exists();
 			$payment = $loan->payments()->latest()->first();
-			//return $payment;
-
-			if($relation){
-				$last_date =  $payment->created_at;
-
-				//echo 'relation exists'. '<br>' . $payment->created_at;
-			}else{
-				$last_date = $loan->created_at;
-				//echo 'relation does not exists'.'<br>'.$loan->created_at;
+			$relation = $loan->payments()->exists();
+			if ($relation) {
+				echo 'relation exists' . '<br>';
+				echo 'last payment= ' . $pbp = $payment->amount . '<br>';
+			} else {
+				echo 'realtion does not exists';
+				echo 'last payment= ' . $pbp = $loan->amount;
 			}
 
-			Payment::create([
-					'amount'=>123,
-					'client_id'=>$loan->client_id,
-					'loan_id'=>$id,
-					'type_id'=>$loan->type_id,
-					'last_date'=>$last_date,
-				]);
-		*/
+		 */
 
 	}
 

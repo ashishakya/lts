@@ -17,41 +17,42 @@ Loan Taken Date : {{$loan->created_at}} <br><br>
 <table border="1">
 	<tr>
 		<th>Id</th>
+		<th>Payment Date</th>
+		<th>PBP</th>
 		<th>Amount</th>
+		<th>PAP</th>
 		<th>Loan_id</th>
 		<th>Client_id</th>
 		<th>Type_id</th>
 		<th>Last Date</th>
-		<th>Payment Date</th>
 		<th>Diffference in Date</th>
+
+
 	</tr>
 
-	
+
 	@foreach($payments as $payment)
-		
+
 		<tr>
 			<td>{{$payment->id}}</td>
+			<td>{{$payment->created_at_date_only}}</td>
+			<td>{{$payment->pbp_rs}}</td>
 			<td>{{$payment->amount_rs}}</td>
+			<td>{{$payment->pap_rs}}</td>
 			<td>{{$payment->loan_id}}</td>
 			<td>{{$payment->client_id}}</td>
 			<td>{{$payment->type_id}}</td>
-			<td>{{$payment->last_date}}</td>
-			<td>{{$payment->created_at}}</td>
-			<td>{{$payment->differenceInDate}}</td>
-			<!-- <td>{{($payment->created_at)->diffInDays($payment->last_date)}}</td> -->
+			<td>{{$payment->last_date_only}}</td>
+			<td>{{$payment->difference_in_date}}</td>
 		</tr>
 
-	<!--	$now = Carbon::today();
-		$later = Carbon::today()->addDays(10);
-		$diff = $later->diffInDays($now);
-	-->
 	@endforeach
 
 	<tr>
 		<td colspan="2"><b><u>{{sprintf('Rs.%s/-',$payments->sum('amount'))}}</u></b></td>
 		<td colspan="4"><b>TOTAL</b></td>
 	</tr>
-	
+
 
 </table>
 

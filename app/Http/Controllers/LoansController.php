@@ -6,7 +6,6 @@ use App\Client;
 use App\Loan;
 use App\Type;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 
 class LoansController extends Controller {
 	/**
@@ -25,7 +24,7 @@ class LoansController extends Controller {
 	public function index() {
 
 		// $loans = $this->loan->all();
-		$loans = $this->loan->with(['clients', 'types','payments'])->get();
+		$loans = $this->loan->with(['clients', 'types', 'payments'])->get();
 		return view('loan.index', compact('loans'));
 		//return 'this is index method';
 		//
@@ -114,39 +113,34 @@ class LoansController extends Controller {
 	}
 
 	public function getPaymentsByLoanId($id) {
-	// >>works perfectly
+		// >>works perfectly
 		$loan = $this->loan->find($id);
-		$payments = $loan->payments()->get();
-		
-		return view('loan.custom', compact('payments', 'loan'));
-	
+		$payments = $loan->payments()->orderBy('id', 'asc')->get();
 
-		/* diff in date:: works 
-		$now = Carbon::today();
-		$later = Carbon::today()->addDays(10);
-		$diff = $later->diffInDays($now);
-		echo $now . '<br>' .$later . '<br>'.$diff;
+		return view('loan.custom', compact('payments', 'loan'));
+
+		/* diff in date:: works
+			$now = Carbon::today();
+			$later = Carbon::today()->addDays(10);
+			$diff = $later->diffInDays($now);
+			echo $now . '<br>' .$later . '<br>'.$diff;
 		*/
 
-
 		/* test
-		$loan = $this->loan->find($id);
-		$payments = $loan->payments()->get();
-		//return $date = $payments->find(1)->created_at;
-		$date = new Carbon($payments->find(1)->created_at);
-		$filteredDate = $date->toDateString();
-		var_dump($filteredDate);
-		$now = Carbon::now()->toDateString();
-		
+			$loan = $this->loan->find($id);
+			$payments = $loan->payments()->get();
+			//return $date = $payments->find(1)->created_at;
+			$date = new Carbon($payments->find(1)->created_at);
+			$filteredDate = $date->toDateString();
+			var_dump($filteredDate);
+			$now = Carbon::now()->toDateString();
 
-		
-
-		/* REFRENCE
-		$created = new Carbon($price->created_at);
-		$now = Carbon::now();
-		$difference = ($created->diff($now)->days < 1)
-		    ? 'today'
-		    : $created->diffForHumans($now);
+			/* REFRENCE
+			$created = new Carbon($price->created_at);
+			$now = Carbon::now();
+			$difference = ($created->diff($now)->days < 1)
+			    ? 'today'
+			    : $created->diffForHumans($now);
 		*/
 
 	}

@@ -20,7 +20,7 @@ class ClientsController extends Controller {
 
 	public function index() {
 		//
-		$clients = $this->client->orderBy('id','asc')->get();
+		$clients = $this->client->orderBy('id', 'asc')->get();
 		return view('client.index', compact('clients'));
 
 	}
@@ -44,8 +44,9 @@ class ClientsController extends Controller {
 	 */
 	public function store(Request $request) {
 		//
-
-		Client::create($request->all());
+		$atrributes = $request->all();
+		//Client::create($request->all);
+		$this->client->create($atrributes);
 		return redirect()->route('clients.index');
 	}
 
