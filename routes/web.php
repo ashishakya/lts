@@ -147,6 +147,32 @@ Route::get('diffInAmount/{id}', function ($id) {
 	}
 });
 
+//update Interest amount in payment table:
+Route::get('updateInterest/{id}', function ($id) {
+	$loan = Loan::find($id);
+	foreach ($loan->payments as $payment) {
+		//$payment->id . ' ';
+		$principal = $payment->pbp;
+		$payment_date = $payment->created_at->toDateString(); // it is in carbob
+		$past_date = Carbon::parse($payment->last_date);
+		$last_date = $past_date->toDateString(); // it is in carbob
+		$diff = Carbon::parse($last_date)->diffInDays(Carbon::parse($payment_date));
+		$interest_rate = $loan->interest;
+		$interest_amount = ($principal * $diff * $interest_rate) / (365 * 100);
+
+		//echo 'id: ' . $payment->id . '>>>' . 'interest_amount.' . $interest_amount . '<br>';
+
+		$pay = Payment::find($payment->id);
+		$pay->update(['interest_amount' => $interest_amount]);
+
+		//$flight = App\Flight::find(1);
+
+		// $pay->interest_amount = $interest_amount;
+		// $pay->save();
+	}
+
+});
+
 Route::group(['middleware' => 'web'], function () {
 
 	Route::resource('types', 'TypesController');
@@ -154,6 +180,6 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('loans', 'LoansController');
 	Route::resource('payments', 'PaymentsController');
 
-	Route::get('getPaymentsByLoanId/{id}', 'LoansController@getPaymentsByLoanId')->name('loans.getById');
+	Route::get('loans/{id}/payments', 'LoansController@getPaymentsByLoanId')->name('loans.getById');
 
 });

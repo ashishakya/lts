@@ -1,4 +1,4 @@
-@extends('layout.app')
+<!-- @extends('layout.app')
 
 @section('content')
 
@@ -7,4 +7,4 @@
 
 <h1><a href="{{route('types.edit',$type->id)}}">{{$type->name}}</a></h1>
 
-@endsection('content')
+@endsection('content') -->

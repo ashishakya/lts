@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h1>This is edit.blade.php</h1>
+<h1>UPDATE LOAN TYPE DETAILS</h1>
 <hr>
 {!!	Form::model($type,['method'=>'PATCH','action'=>['TypesController@update',$type->id]]) !!}
 

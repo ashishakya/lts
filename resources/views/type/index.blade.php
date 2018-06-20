@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('content')
-	<h1>this is Index.blade.php [List of Loan]</h1><hr>
+	<h1>LIST OF LOAN TYPES</h1><hr>
 	<table border="1">
 		<tr>
 			<th>Id</th>

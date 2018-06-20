@@ -29,14 +29,5 @@ class Loan extends Model {
 	public function getAmountRsAttribute() {
 		return sprintf('Rs.%s/-', $this->amount);
 	}
-	/*
-		public function getInterestPercentageAttribute() {
-			return sprintf('%s%',$this->intrest);
-		}
-	*/
-
-	/*public function getAmountRsAttribute() {
-		return sprintf('Rs. %s/-', $this->amount);
-	}*/
 
 }

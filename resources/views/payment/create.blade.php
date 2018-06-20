@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h1>This is create.blade.php [[REGISTER NEW PAYEMENT]</h1>
+<h1>MAKE NEW PAYEMENT</h1>
 <a href="{{route('payments.index')}}">VIEW ALL PAYMENTS</a>
 <hr>
 

@@ -18,9 +18,7 @@ class TypesController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index() {
-
-		$types = $this->type->orderBy('id','asc')->get();
-
+		$types = $this->type->orderBy('id', 'asc')->get();
 		return view('type.index', compact('types'));
 
 	}
@@ -79,7 +77,7 @@ class TypesController extends Controller {
 	public function edit($id) {
 		//
 		// return 'this is edit method';
-		$type = Type::find($id);
+		$type = $this->type::find($id);
 		return view('type.edit', compact('type'));
 	}
 
@@ -92,7 +90,9 @@ class TypesController extends Controller {
 	 */
 	public function update(Request $request, $id) {
 		//
-		Type::find($id)->update($request->all());
+		$attributes = $request->all();
+		$type = $this->type->find($id);
+		$type->update($attributes);
 		return redirect('/types');
 	}
 
@@ -103,7 +103,7 @@ class TypesController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function destroy($id) {
-		Type::find($id)->delete();
+		$this->type->find($id)->delete();
 		return redirect('/types');
 	}
 }

@@ -23,11 +23,8 @@ class LoansController extends Controller {
 
 	public function index() {
 
-		// $loans = $this->loan->all();
 		$loans = $this->loan->with(['clients', 'types', 'payments'])->get();
 		return view('loan.index', compact('loans'));
-		//return 'this is index method';
-		//
 
 	}
 
@@ -39,9 +36,6 @@ class LoansController extends Controller {
 	public function create() {
 		$clients = $this->client->all()->pluck('name', 'id');
 		$types = $this->type->all()->pluck('name', 'id');
-		//$types = $this->type->distinct('name')->get()->toArray();
-
-		//dd($types);
 		return view('loan.create', compact('clients', 'types'));
 	}
 
@@ -52,11 +46,9 @@ class LoansController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(Request $request) {
-		// return 'this is store method';
 		$type_id = $request->type_id;
 		$attributes = $request->all();
 
-		// since interest rate is not shown in create form, we calculate here
 		$interest = $this->type::find($type_id)->rate;
 		$attributes['interest'] = $interest;
 
@@ -74,7 +66,6 @@ class LoansController extends Controller {
 	public function show($id) {
 		//
 
-		return 'this is show method';
 	}
 
 	/**
@@ -85,7 +76,6 @@ class LoansController extends Controller {
 	 */
 	public function edit($id) {
 		//
-		return 'this is edit method';
 	}
 
 	/**
@@ -97,7 +87,6 @@ class LoansController extends Controller {
 	 */
 	public function update(Request $request, $id) {
 		//
-		return 'this is update method';
 	}
 
 	/**
@@ -113,35 +102,10 @@ class LoansController extends Controller {
 	}
 
 	public function getPaymentsByLoanId($id) {
-		// >>works perfectly
+
 		$loan = $this->loan->find($id);
+		$loan_detail = $this->loan->where('id', $id)->with(['types', 'clients'])->first();
 		$payments = $loan->payments()->orderBy('id', 'asc')->get();
-
-		return view('loan.custom', compact('payments', 'loan'));
-
-		/* diff in date:: works
-			$now = Carbon::today();
-			$later = Carbon::today()->addDays(10);
-			$diff = $later->diffInDays($now);
-			echo $now . '<br>' .$later . '<br>'.$diff;
-		*/
-
-		/* test
-			$loan = $this->loan->find($id);
-			$payments = $loan->payments()->get();
-			//return $date = $payments->find(1)->created_at;
-			$date = new Carbon($payments->find(1)->created_at);
-			$filteredDate = $date->toDateString();
-			var_dump($filteredDate);
-			$now = Carbon::now()->toDateString();
-
-			/* REFRENCE
-			$created = new Carbon($price->created_at);
-			$now = Carbon::now();
-			$difference = ($created->diff($now)->days < 1)
-			    ? 'today'
-			    : $created->diffForHumans($now);
-		*/
-
+		return view('loan.custom', compact('payments', 'loan', 'loan_detail'));
 	}
 }

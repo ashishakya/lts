@@ -14,25 +14,8 @@ class Type extends Model {
 		return $this->hasMany('App\Loan');
 	}
 
-
-	public function getRatePercentAttribute(){
-		return $this->rate.'%';
+	public function getRatePercentAttribute() {
+		return $this->rate . '%';
 	}
-
-	/*
-	
-	 public function getRateAttribute($value) {
-		return $value.'%';
-		
-	}
-	*/
-
-	/*public function getRateAttribute(){
-		return sprintf('%s%',$this->rate);
-	}*/
-
-
-		
 
 }
-	

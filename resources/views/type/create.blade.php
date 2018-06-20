@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h1>This is create.blade.php [REGISTER NEW LOAN TYPE]</h1>
+<h1>REGISTER NEW LOAN TYPE</h1>
 <a href="{{route('types.index')}}">VIEW ALL ACTIVE LOAN TYPES</a>
 <hr>
 

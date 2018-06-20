@@ -3,7 +3,7 @@
 @section('content')
 
 
-<h1>This is Index.blade.php [List of all payments]</h1><hr>
+<h1>LIST OF ALL PAYMENTS</h1><hr>
 <table border="1">
 	<tr>
 		<th>Id</th>

@@ -2,13 +2,13 @@
 
 @section('content')
 
-<h1>this is Index.blade.php [List of Loans taken]</h1><hr>
+<h1>LIST OF ALL LOANS</h1><hr>
 <table border="1">
 	<tr>
 		<th>Loan Id</th>
-		<th>Client Id</th>
+		<!-- <th>Client Id</th> -->
 		<th>Client Name</th>
-		<th>Type Id</th>
+		<!-- <th>Type Id</th> -->
 		<th>Type Name</th>
 		<th>Amount</th>
 		<th>Interest Rate</th>
@@ -17,10 +17,10 @@
 	@foreach($loans as $loan)
 		<tr>
 			<td>{{$loan->id}}</td>
-			<td>{{$loan->clients->id}}</td>
+			<!-- <td>{{$loan->clients->id}}</td> -->
 			<td><a href="{{route('clients.show',$loan->clients->id)}}">{{$loan->clients->name}}</a></td>
 
-			<td>{{$loan->types->id or ''}}</td>
+			<!-- <td>{{$loan->types->id or ''}}</td> -->
 			<td>{{$loan->types->name or ''}}</td>
 
 			<td>{{$loan->amount_rs}}</td>
@@ -28,7 +28,7 @@
 
 			<!--<td><a href="{{route('loans.getById',$loan->id)}}">View Payments</a></td>-->
 
-		
+
 
 		<!-- checks realation with payments	 -->
 
@@ -37,7 +37,7 @@
 			@else
 				<td>NO PAYMENTS</td>
 			@endif
-		
+
 
 
 		</tr>

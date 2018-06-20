@@ -45,7 +45,6 @@ class ClientsController extends Controller {
 	public function store(Request $request) {
 		//
 		$atrributes = $request->all();
-		//Client::create($request->all);
 		$this->client->create($atrributes);
 		return redirect()->route('clients.index');
 	}
@@ -77,7 +76,6 @@ class ClientsController extends Controller {
 		//
 		$client = $this->client->find($id);
 		return view('client.edit', compact('client'));
-		//return 'this is edit method';
 	}
 
 	/**
@@ -89,10 +87,10 @@ class ClientsController extends Controller {
 	 */
 	public function update(Request $request, $id) {
 		//
-
-		$this->client->find($id)->update($request->all());
+		$attributes = $request->all();
+		$client = $this->client->find($id);
+		$client->update($attributes);
 		return redirect()->route('clients.index');
-		//return 'this is update method';
 	}
 
 	/**
