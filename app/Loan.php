@@ -30,4 +30,7 @@ class Loan extends Model {
 		return sprintf('Rs.%s/-', $this->amount);
 	}
 
+	public function getLoanIdAttribute() {
+		return sprintf('LID-%s', $this->id);
+	}
 }

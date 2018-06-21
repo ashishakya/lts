@@ -1,11 +1,4 @@
-@extends('layout.app')
-
-@section('content')
-
 <h1>LIST OF PAYMENTS FOR SPECIFIC LOAN</h1>
-
-<a href="{{route('loans.index')}}">VIEW ALL LOANS ISSUED</a><hr>
-
 
 <table border="2">
 	<tr>
@@ -38,12 +31,9 @@
 <!-- Type Id: {{$loan->type_id}}<br> -->
 
 
-<b><a href="{{route('payments.getPdf',$loan->id)}}">GENERATE PDF</a></b>
-
 <table border="1">
 	<tr>
-		<th>SN</th>
-		<th>Tranx Id</th>
+		<th>Id</th>
 		<th>Payment Date</th>
 		<th>PBP</th>
 		<th>Amount</th>
@@ -55,9 +45,8 @@
 		<th>Diffference in Date</th>
 		<th>Interest Amount</th>
 	</tr>
-	@foreach($payments as $key=>$payment)
+	@foreach($payments as $payment)
 		<tr>
-			<td>{{++$key}}</td>
 			<td>{{$payment->id}}</td>
 			<td>{{$payment->created_at_date_only}}</td>
 			<td>{{$payment->pbp_rs}}</td>
@@ -85,7 +74,6 @@
 
 <table border="1">
 	<tr>
-
 		<th>Date</th>
 		<th>Trx Id</th>
 		<th>Cr</th>
@@ -102,7 +90,7 @@
 		<td>{{$loan->amount_rs}}</td>
 		<td style="text-align: center;">-</td>
 	</tr>
-	@foreach($payments as $key=>$payment)
+	@foreach($payments as $payment)
 	<tr>
 		<td>{{$payment->created_at_date_only}}</td>
 		<td>{{$payment->payment_id}}</td>
@@ -119,4 +107,3 @@
 		<td>{{sprintf('Rs.%s/-',round($payments->sum('interest_amount',4) ) )}}</td>
 	</tr>
 </table>
-@endsection

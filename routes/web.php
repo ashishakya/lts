@@ -129,9 +129,6 @@ Route::get('/date/{id}', function ($id) {
 		'last_date' => $last_date,
 	]);
 
-	//echo 'amount:123 '.'<br>'.'client_id: '.$loan->client_id.'<br>'.'loan_id: '.$id.'<br>'.'type_id: '. $loan->type_id.'<br>','last_date: '.$last_date;
-
-	//return view('loan.custom', compact('payments', 'loan'));
 });
 
 // for diff in principal amount:
@@ -165,11 +162,6 @@ Route::get('updateInterest/{id}', function ($id) {
 
 		$pay = Payment::find($payment->id);
 		$pay->update(['interest_amount' => $interest_amount]);
-
-		//$flight = App\Flight::find(1);
-
-		// $pay->interest_amount = $interest_amount;
-		// $pay->save();
 	}
 
 });
@@ -180,7 +172,8 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('clients', 'ClientsController');
 	Route::resource('loans', 'LoansController');
 	Route::resource('payments', 'PaymentsController');
-
 	Route::get('loans/{id}/payments', 'LoansController@getPaymentsByLoanId')->name('loans.getById');
+
+	Route::get('loans/{id}/payments/getPdf', 'PaymentsController@getPdf')->name('payments.getPdf');
 
 });

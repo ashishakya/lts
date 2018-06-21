@@ -50,4 +50,8 @@ class Payment extends Model {
 		return round($this->interest_amount, 2);
 	}
 
+	public function getPaymentIdAttribute() {
+		return sprintf('PID-%s', $this->id);
+	}
+
 }
