@@ -9,6 +9,14 @@ class Payment extends Model {
 	//
 	protected $fillable = ['amount', 'loan_id', 'client_id', 'type_id', 'last_date', 'pbp', 'pap', 'interest_amount'];
 
+	public function client() {
+		return $this->belongsTo('App\Client');
+	}
+
+	public function type() {
+		return $this->belongsTo('App\Type');
+	}
+
 	public function getAmountRsAttribute() {
 		return sprintf('Rs.%s/-', $this->amount);
 	}

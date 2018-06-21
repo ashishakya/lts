@@ -21,7 +21,9 @@ class PaymentsController extends Controller {
 		$this->payment = $payment;
 	}
 	public function index() {
-		$payments = $this->payment->orderBy('id')->get();
+		//$payments = $this->payment->orderBy('id')->get();
+		$payments = $this->payment->with(['client', 'type'])->orderBy('id')->get();
+
 		return view('payment.index', compact('payments'));
 
 	}

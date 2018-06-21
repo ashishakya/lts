@@ -17,7 +17,8 @@ use App\Type;
 use Carbon\Carbon;
 
 Route::get('/', function () {
-	return view('welcome');
+	//return view('welcome');
+	return redirect()->route('loans.index');
 });
 
 // belongsToMany:returns list of clients name for specific loan

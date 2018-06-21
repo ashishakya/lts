@@ -8,7 +8,7 @@
 
 	{!! Form::text('name',null,['placeholder'=>'Loan Type'])!!}{{$errors->first('name')}}<br>
 
-	{!! Form::number('rate',null,['placeholder'=>'Rate'])!!}{{$errors->first('rate')}}<br>
+	{!! Form::text('rate',null,['placeholder'=>'Rate'])!!}{{$errors->first('rate')}}<br>
 
 	{!! Form::submit('Update Loan Type')!!}
 

@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h1>LIST OF ALL LOANS</h1><hr>
+<h1>LIST OF ALL ISSUED LOANS</h1><hr>
 <table border="1">
 	<tr>
 		<th>Loan Id</th>
@@ -37,8 +37,6 @@
 			@else
 				<td>NO PAYMENTS</td>
 			@endif
-
-
 
 		</tr>
 	@endforeach
