@@ -4,8 +4,8 @@
 
 
 <h1>LIST OF ALL PAYMENTS</h1><hr>
-<table border="1">
-	<tr>
+<table class="table table-sm">
+	<thead class="thead-dark">
 		<th>Id</th>
 		<th>Amount</th>
 		<th>Loan_Id</th>
@@ -16,9 +16,9 @@
 		<th>Type Name</th>
 		<th>Payment Date</th>
 		<th>Action</th>
-	</tr>
+	</thead>
 	@foreach($payments as $payment)
-		<tr>
+		<tbody>
 			<td>{{$payment->id}}</td>
 			<td>{{$payment->amount_rs}}</a></td>
 			<td>{{$payment->loan_id}}</td>
@@ -29,7 +29,7 @@
 			<td>{{$payment->created_at}}</td>
 
 			<td><a href="">Action</a></td>
-		</tr>
+		</tbody>
 	@endforeach
 </table>
 

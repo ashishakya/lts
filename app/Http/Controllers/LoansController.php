@@ -34,39 +34,17 @@ class LoansController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create() {
-		/*$clients = $this->client->orderBy('id', 'asc')->get(['id', 'name', 'contact']);
-			dump($clients);
-			$bind_clients = $clients->map(function ($client, $id) {
-				dump($client->name, $client->id);
-				return $client->id . ' | ' . $client->name . ' | ' . $client->contact;
-			});
-			dd($bind_clients);
-		*/
 
-		// laravel .com
-		/*$clients = $this->client->orderBy('id', 'asc')->pluck('name', 'id');
-		//dump($clients);
-		$multiplied = $clients->map(function ($item, $key) {
-
-			return $item . ' | ' . '9999';
-		});
-		dd($multiplied);
-		*/
-		//code using map
-		// $clients = $this->client->all();
-		// $bind_clients = $clients->map(function ($client) {
-		// 	// $data = [];
-		// 	// $data[$client->id] = $client->name . ' | ' . $client->contact;
-		// 	// return $data;
-
-		// 	return $client->id . ' | ' . $client->name . ' | ' . $client->contact;
-		// });
-		// dd($bind_clients);
+		$clients = $this->client->orderBy('id', 'asc')->get();
+		$bindContact = $clients->map(function ($client) {
+			$client['name_contact'] = $client->name . ' | ' . $client->contact;
+			return $client;
+		})->pluck('name_contact', 'id');
 
 		// initial code
-		$clients = $this->client->orderBy('id', 'asc')->get()->pluck('name', 'id');
+		//$clients = $this->client->orderBy('id', 'asc')->get()->pluck('name', 'id');
 		$types = $this->type->all()->pluck('name', 'id');
-		return view('loan.create', compact('clients', 'types'));
+		return view('loan.create', compact('bindContact', 'types'));
 
 	}
 

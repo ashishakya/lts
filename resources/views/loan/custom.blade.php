@@ -7,7 +7,7 @@
 <a href="{{route('loans.index')}}">VIEW ALL LOANS ISSUED</a><hr>
 
 
-<table border="2">
+<table class="table table-sm">
 	<tr>
 		<th>Loan Id:</th>
 		<td>{{$loan->id}}</td>
@@ -38,23 +38,24 @@
 <!-- Type Id: {{$loan->type_id}}<br> -->
 
 
-<b><a href="{{route('payments.getPdf',$loan->id)}}">GENERATE PDF</a></b>
+<b><a style="color:red;" href="{{route('payments.getPdf',$loan->id)}}">GENERATE PDF</a></b>
 
-<table border="1">
-	<tr>
-		<th>SN</th>
-		<th>Tranx Id</th>
-		<th>Payment Date</th>
-		<th>PBP</th>
-		<th>Amount</th>
-		<th>PAP</th>
-		<!-- <th>Loan_id</th> -->
-		<!-- <th>Client_id</th> -->
-		<!-- <th>Type_id</th> -->
-		<th>Last Date</th>
-		<th>Diffference in Date</th>
-		<th>Interest Amount</th>
-	</tr>
+<table class="table">
+		<thead class="thead-dark">
+			<th>SN</th>
+			<th>Tranx Id</th>
+			<th>Payment Date</th>
+			<th>PBP</th>
+			<th>Amount</th>
+			<th>PAP</th>
+			<!-- <th>Loan_id</th> -->
+			<!-- <th>Client_id</th> -->
+			<!-- <th>Type_id</th> -->
+			<th>Last Date</th>
+			<th>Diffference in Date</th>
+			<th>Interest Amount</th>
+		</thead>
+
 	@foreach($payments as $key=>$payment)
 		<tr>
 			<td>{{++$key}}</td>
@@ -72,27 +73,25 @@
 		</tr>
 	@endforeach
 	<tr>
-		<td colspan="7" style="text-align: right;"><b>TOTAL PAYMENT</b></td>
+		<td colspan="8" style="text-align: right;"><b>TOTAL PAYMENT</b></td>
 		<td><b><u>{{sprintf('Rs.%s/-',$payments->sum('amount'))}}</u></b></td>
 	</tr>
 	<tr>
-		<td colspan="7" style="text-align: right;"><b>TOTAL INTEREST PAYABLE</b></td>
+		<td colspan="8" style="text-align: right;"><b>TOTAL INTEREST PAYABLE</b></td>
 		<td><b><u>{{sprintf('Rs.%s/-',round($payments->sum('interest_amount',4) ) )}}</u></b></td>
 	</tr>
 </table><br><br><br>
 
 
 
-<table border="1">
-	<tr>
-
+<table class="table">
+	<thead class="thead-dark">
 		<th>Date</th>
 		<th>Trx Id</th>
 		<th>Cr</th>
 		<th>Dr</th>
 		<th>Interest Amount</th>
-
-	</tr>
+	</thead>
 	<tr>
 			<!-- This section contains data from loan_id -->
 
@@ -114,9 +113,9 @@
 	<tr>
 		<th style="text-align: center;" colspan="2">Total</th>
 
-		<td>{{sprintf('Rs.%s/-',$payments->sum('amount'))}}</td>
+		<td><b>{{sprintf('Rs.%s/-',$payments->sum('amount'))}}</b></td>
 		<td></td>
-		<td>{{sprintf('Rs.%s/-',round($payments->sum('interest_amount',4) ) )}}</td>
+		<td><b>{{sprintf('Rs.%s/-',round($payments->sum('interest_amount',4) ) )}}</b></td>
 	</tr>
 </table>
 @endsection

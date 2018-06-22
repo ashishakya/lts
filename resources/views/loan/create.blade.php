@@ -9,7 +9,7 @@
 {!! Form::open(['method'=>'POST','action'=>'LoansController@store']) !!}
 	<!-- for client name -->
 	{!! Form::label('client_id','CLIENT NAME:')!!}
-	{!! Form::select('client_id', $clients)!!} <br>
+	{!! Form::select('client_id', $bindContact)!!} <br>
 
 	<!-- for loan type -->
 	{!! Form::label('type_id','LOAN TYPE:')!!}

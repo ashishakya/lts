@@ -6,7 +6,6 @@ use App\Loan;
 use App\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use PDF;
 
 class PaymentsController extends Controller {
 	/**
@@ -155,8 +154,8 @@ class PaymentsController extends Controller {
 		$loan = $this->loan->find($id);
 		$loan_detail = $this->loan->where('id', $id)->with(['types', 'clients'])->first();
 		$payments = $loan->payments()->orderBy('id', 'asc')->get();
-		//return view('payment.pdf', compact('payments', 'loan', 'loan_detail'));
-		$pdf = PDF::loadView('payment.pdf', compact('payments', 'loan', 'loan_detail'));
-		return $pdf->download('Invoice.pdf');
+		return view('payment.pdf', compact('payments', 'loan', 'loan_detail'));
+		//$pdf = PDF::loadView('payment.pdf', compact('payments', 'loan', 'loan_detail'));
+		//return $pdf->download('Invoice.pdf');
 	}
 }

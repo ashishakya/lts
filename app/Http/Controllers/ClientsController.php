@@ -19,7 +19,7 @@ class ClientsController extends Controller {
 	}
 
 	public function index() {
-		//
+
 		$clients = $this->client->orderBy('id', 'asc')->get();
 		return view('client.index', compact('clients'));
 
@@ -56,11 +56,6 @@ class ClientsController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function show($id) {
-
-		//return 'this is show method of client';
-		// $client = $this->client->find($id);
-		// return view('client.show', compact('client'));
-		// //return $client;
 
 		$client = $this->client->find($id);
 		return view('client.show', compact('client'));
@@ -103,6 +98,19 @@ class ClientsController extends Controller {
 		//
 		$this->client->find($id)->delete();
 		return redirect()->route('clients.index');
+	}
+
+	public function filter(Request $request) {
+
+		$parameter = $request->parameter;
+		$clients = $this->client->where('name', 'ILIKE', '%' . $parameter . '%')
+			->orwhere('address', 'ILIKE', '%' . $parameter . '%')
+			->orwhere('address', 'ILIKE', '%' . $parameter . '%')
+			->orwhere('contact', 'LIKE', '%' . $parameter . '%')
+			->orderBy('id', 'asc')
+			->get();
+		return view('client.index', compact('clients'));
+
 	}
 
 }

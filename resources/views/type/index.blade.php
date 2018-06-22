@@ -2,20 +2,20 @@
 
 @section('content')
 	<h1>LIST OF LOAN TYPES</h1><hr>
-	<table border="1">
-		<tr>
-			<th>Id</th>
-			<th>Name</th>
-			<th>Interest Rate</th>
-			<th>Action</th>
-		</tr>
+	<table class="table table-sm">
+		<thead class="thead-dark">
+				<th>Id</th>
+				<th>Name</th>
+				<th>Interest Rate</th>
+				<th>Action</th>
+		</thead>
 		@foreach($types as $type)
-			<tr>
+			<tbody>
 				<td>{{$type->id}}</td>
 				<td>{{$type->name}}</td>
 				<td>{{$type->rate_percent}}</td>
 				<td><a href="{{route('types.edit',$type->id)}}">Edit</a></td>
-			</tr>
+			</tbody>
 		@endforeach
 	</table>
 @endsection

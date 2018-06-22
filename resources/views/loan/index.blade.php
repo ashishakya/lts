@@ -3,8 +3,8 @@
 @section('content')
 
 <h1>LIST OF ALL ISSUED LOANS</h1><hr>
-<table border="1">
-	<tr>
+<table class="table table-sm">
+	<thead class="thead-dark">
 		<th>Loan Id</th>
 		<!-- <th>Client Id</th> -->
 		<th>Client Name</th>
@@ -13,7 +13,7 @@
 		<th>Amount</th>
 		<th>Interest Rate</th>
 		<th>Action</th>
-	</tr>
+	</thead>
 	@foreach($loans as $loan)
 		<tr>
 			<td>{{$loan->id}}</td>

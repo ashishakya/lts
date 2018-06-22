@@ -1,6 +1,7 @@
+
 <h1>LIST OF PAYMENTS FOR SPECIFIC LOAN</h1>
 
-<table border="2">
+<table border="1">
 	<tr>
 		<th>Loan Id:</th>
 		<td>{{$loan->id}}</td>
@@ -32,7 +33,7 @@
 
 
 <table border="1">
-	<tr>
+	<th>
 		<th>Id</th>
 		<th>Payment Date</th>
 		<th>PBP</th>
@@ -44,7 +45,7 @@
 		<th>Last Date</th>
 		<th>Diffference in Date</th>
 		<th>Interest Amount</th>
-	</tr>
+	</th>
 	@foreach($payments as $payment)
 		<tr>
 			<td>{{$payment->id}}</td>
