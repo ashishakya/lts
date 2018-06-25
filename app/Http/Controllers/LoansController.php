@@ -114,6 +114,7 @@ class LoansController extends Controller {
 		$loan = $this->loan->find($id);
 		$loan_detail = $this->loan->where('id', $id)->with(['types', 'clients'])->first();
 		$payments = $loan->payments()->orderBy('id', 'asc')->get();
+
 		return view('loan.custom', compact('payments', 'loan', 'loan_detail'));
 	}
 }

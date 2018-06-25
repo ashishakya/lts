@@ -27,9 +27,14 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('loans/{id}/payments/getPdf', ['as' => 'payments.getPdf', 'uses' => 'PaymentsController@getPdf']);
 
 	Route::post('clients/filter', ['as' => 'clients.filter', 'uses' => 'ClientsController@filter']);
+    Route::get('payments/{id}/interest', ['as' => 'payment.ind.interest', 'uses' => 'PaymentsController@updateIndividualInterest']);
+    Route::get('loans/{id}/interest', ['as' => 'payment.all.interest', 'uses' => 'PaymentsController@updateAllInterest']);
 
-	Route::get('dashboard', function () {
-		return view('layout.dashboard');
-	});
+	Route::get('dashboard', function () {return view('layout.dashboard');});
+	Route::get('base', function () {return view('layout.base');});
+	Route::get('table', function () {return view('layout.table');});
 
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

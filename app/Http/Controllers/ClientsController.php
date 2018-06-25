@@ -31,8 +31,7 @@ class ClientsController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create() {
-		//
-		//return 'this is create method';
+
 		return view('client.create');
 	}
 
@@ -43,7 +42,7 @@ class ClientsController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(Request $request) {
-		//
+
 		$atrributes = $request->all();
 		$this->client->create($atrributes);
 		return redirect()->route('clients.index');
@@ -55,9 +54,10 @@ class ClientsController extends Controller {
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show($id) {
+	public function show(Client $client) { // Client::find($id)
 
-		$client = $this->client->find($id);
+//		$client = $this->client->find($id);
+
 		return view('client.show', compact('client'));
 	}
 
@@ -68,7 +68,7 @@ class ClientsController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function edit($id) {
-		//
+
 		$client = $this->client->find($id);
 		return view('client.edit', compact('client'));
 	}
@@ -81,7 +81,7 @@ class ClientsController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function update(Request $request, $id) {
-		//
+
 		$attributes = $request->all();
 		$client = $this->client->find($id);
 		$client->update($attributes);
@@ -95,13 +95,12 @@ class ClientsController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function destroy($id) {
-		//
+
 		$this->client->find($id)->delete();
 		return redirect()->route('clients.index');
 	}
 
 	public function filter(Request $request) {
-
 		$parameter = $request->parameter;
 		$clients = $this->client->where('name', 'ILIKE', '%' . $parameter . '%')
 			->orwhere('address', 'ILIKE', '%' . $parameter . '%')

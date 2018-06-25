@@ -11,7 +11,8 @@ class Type extends Model {
 	public function loans() {
 
 		//return $this->hasMany('App\Client', 'client_id', 'id');
-		return $this->hasMany('App\Loan');
+		//return $this->hasMany('App\Loan');
+        return $this->hasMany(Payment::class);
 	}
 
 	public function getRatePercentAttribute() {

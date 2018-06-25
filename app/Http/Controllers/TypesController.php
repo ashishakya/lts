@@ -77,7 +77,7 @@ class TypesController extends Controller {
 	public function edit($id) {
 		//
 		// return 'this is edit method';
-		$type = $this->type::find($id);
+		$type = $this->type->find($id);
 		return view('type.edit', compact('type'));
 	}
 
