@@ -2,11 +2,12 @@
 
 @section('content')
 
-<h1>ISSUE NEW LOAN</h1>
-<a href="{{route('loans.index')}}">VIEW ALL LOANS</a><hr>
+	<h1>ISSUE NEW LOAN</h1>
+	<a href="{{route('loans.index')}}">VIEW ALL LOANS</a>
+	<hr>
 
 
-{!! Form::open(['method'=>'POST','action'=>'LoansController@store']) !!}
+	{!! Form::open(['method'=>'POST','action'=>'LoansController@store']) !!}
 	<!-- for client name -->
 	{!! Form::label('client_id','CLIENT NAME:')!!}
 	{!! Form::select('client_id', $bindContact)!!} <br>
@@ -27,7 +28,7 @@
 
 	{!! Form::submit('Save New Loan Type')!!}
 	{!! Form::reset('Reset')!!}
-{!! Form::close()!!}
+	{!! Form::close()!!}
 
 @endsection('content')
 

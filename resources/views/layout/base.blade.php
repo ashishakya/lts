@@ -51,6 +51,12 @@
           <span class="nav-link-text">All Loan Types</span>
         </a>
       </li>
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+        <a class="nav-link" href="{{route('payments.create')}}">
+          <i class="fa fa-fw fa-table"></i>
+          <span class="nav-link-text">Payment</span>
+        </a>
+      </li>
       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
         <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
           <i class="fa fa-fw fa-wrench"></i>
@@ -120,13 +126,6 @@
         <a class="nav-link" href="#">
           <i class="fa fa-fw fa-link"></i>
           <span class="nav-link-text">Link</span>
-        </a>
-      </li>
-    </ul>
-    <ul class="navbar-nav sidenav-toggler">
-      <li class="nav-item">
-        <a class="nav-link text-center" id="sidenavToggler">
-          <i class="fa fa-fw fa-angle-left"></i>
         </a>
       </li>
     </ul>

@@ -26,4 +26,12 @@ class Client extends Model {
 		//return $this->hasMany('App\Loan');
         return $this->hasMany(Loan::class);
 	}
+
+	public function setAddressAttribute($address){
+	    return $this->attributes['address'] = ucwords($address);
+    }
+
+    public function setNameAttribute($name){
+        return $this->attributes['name'] = ucwords($name);
+    }
 }

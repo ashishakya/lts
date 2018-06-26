@@ -149,3 +149,12 @@ Route::get('updateInterest/{id}', function ($id) {
 	}
 
 });
+
+
+// update clients address to ucword
+Route::get('update',function (){
+	    $clients = \App\Client::all();
+	    foreach ($clients as $client){
+	        $client->update(['address'=>ucwords($client->address)]);
+        }
+    });

@@ -1,28 +1,27 @@
 @extends('layout.base')
 
 @section('content')
+	<h1>UPDATE CLIENT'S DETAIL</h1>
+	<hr>
+	{!!	Form::model($client,['method'=>'PATCH','action'=>['ClientsController@update',$client->id]]) !!}
 
-<h1>UPDATE CLIENT'S DETAIL</h1>
-<hr>
-{!!	Form::model($client,['method'=>'PATCH','action'=>['ClientsController@update',$client->id]]) !!}
+		{!! Form::label('name','Client Name: ')!!}
+		{!! Form::text('name',null,['placeholder'=>'Client Name'])!!}<br>
 
-	{!! Form::label('name','Client Name: ')!!}
-	{!! Form::text('name',null,['placeholder'=>'Client Name'])!!}<br>
+		{!! Form::label('address','Address: ')!!}
+		{!! Form::text('address',null,['placeholder'=>'Client\'s Address'])!!}<br>
 
-	{!! Form::label('address','Address: ')!!}
-	{!! Form::text('address',null,['placeholder'=>'Client\'s Address'])!!}<br>
+		{!! Form::label('contact','Contact: ')!!}
+		{!! Form::text('contact',null,['placeholder'=>'Contact'])!!}<br>
 
-	{!! Form::label('contact','Contact: ')!!}
-	{!! Form::text('contact',null,['placeholder'=>'Contact'])!!}<br>
+		{!! Form::submit('Update Loan Type')!!}
 
-	{!! Form::submit('Update Loan Type')!!}
-
-{!! Form::close()!!}
+	{!! Form::close()!!}
 
 
-{!! Form::open(['method'=>'DELETE','action'=>['ClientsController@destroy',$client->id]]) !!}
-	{!! Form::submit('DELETE')!!}
-{!! Form::close()!!}
+	{!! Form::open(['method'=>'DELETE','action'=>['ClientsController@destroy',$client->id]]) !!}
+		{!! Form::submit('DELETE')!!}
+	{!! Form::close()!!}
 
 
 @endsection('content')

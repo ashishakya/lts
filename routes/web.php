@@ -20,10 +20,8 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('loans', 'LoansController');
 	Route::resource('payments', 'PaymentsController');
 
-	//Route::get('loans/{id}/payments', 'LoansController@getPaymentsByLoanId')->name('loans.getById');
 	Route::get('loans/{id}/payments', ['as' => 'loans.getById', 'uses' => 'LoansController@getPaymentsByLoanId']);
 
-	//Route::get('loans/{id}/payments/getPdf', 'PaymentsController@getPdf')->name('payments.getPdf');
 	Route::get('loans/{id}/payments/getPdf', ['as' => 'payments.getPdf', 'uses' => 'PaymentsController@getPdf']);
 
 	Route::post('clients/filter', ['as' => 'clients.filter', 'uses' => 'ClientsController@filter']);
@@ -33,6 +31,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('dashboard', function () {return view('layout.dashboard');});
 	Route::get('base', function () {return view('layout.base');});
 	Route::get('table', function () {return view('layout.table');});
+
 
 });
 Auth::routes();

@@ -60,7 +60,7 @@
 					@foreach($clients as $client)
 						<tbody>
 							<td>{{$client->id}}</td>
-							<td><a>{{$client->name}}</a></td>
+							<td><a href="{{route('clients.show',$client->id)}}">{{$client->name}}</a></td>
 							<td>{{$client->address}}</td>
 							<td>{{$client->contact}}</td>
 							<td><a href="{{route('clients.edit',$client->id)}}">Edit</a></td>
@@ -69,7 +69,7 @@
 				</table>
 			</div>
 		</div>
-		<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+		<div class="card-footer small text-muted">Updated {{($clients->last()->created_at->diffForHumans())}}</div>
 	</div>
 	@endif
 @endsection

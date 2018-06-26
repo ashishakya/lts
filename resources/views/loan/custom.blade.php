@@ -1,129 +1,130 @@
 @extends('layout.base')
-
 @section('content')
+	{{--<a href="{{route('clients.index')}}" onclick="return confirm('Are you sure?')">Try it</a>--}}
 
-<h1>LIST OF PAYMENTS FOR SPECIFIC LOAN</h1>
+	<h1>LIST OF PAYMENTS FOR SPECIFIC LOAN</h1>
 
-<a href="{{route('loans.index')}}">VIEW ALL LOANS ISSUED</a>
+	<a href="{{route('loans.index')}}">VIEW ALL LOANS ISSUED</a>
 
+	{{--Loan Detail--}}
+	<table class="table table-sm">
+		<tr>
+			<th>Client Name:</th>
+			<td><b><a href="{{route('clients.show',$loan_detail->clients->id)}}">{{$loan_detail->clients->name}}</a></b></td>
+		</tr>
+		<tr>
+			<th>Loan Id:</th>
+			<td>{{$loan->id}}</td>
+		</tr>
+		<tr>
+			<th>Total Loan Amount:</th>
+			<td>{{$loan->amount_rs}}</td>
+		</tr>
+		<tr>
+			<th>Loan Type:</th>
+			<td>{{$loan_detail->types->name}}</td>
+		</tr>
+		<tr>
+			<th>Interest Rate:</th>
+			<td>{{$loan->interest_rate}}</td>
+		</tr>
+		<tr>
+			<th>Loan Taken Date:</th>
+			<td>{{$loan->created_at}}</td>
+		</tr>
+	</table><br>
 
-<table class="table table-sm">
+	<b><a style="color:red;" href="{{route('payments.getPdf',$loan->id)}}">GENERATE PDF</a></b>
 
-	<tr>
-		<th>Client Name:</th>
-		<td><b><a href="{{route('clients.show',$loan_detail->clients->id)}}">{{$loan_detail->clients->name}}</a></b></td>
-	</tr>
-	<tr>
-		<th>Loan Id:</th>
-		<td>{{$loan->id}}</td>
-	</tr>
-	<tr>
-		<th>Total Loan Amount:</th>
-		<td>{{$loan->amount_rs}}</td>
-	</tr>
-	<tr>
-		<th>Loan Type:</th>
-		<td>{{$loan_detail->types->name}}</td>
-	</tr>
-	<tr>
-		<th>Intrest Rate:</th>
-		<td>{{$loan->interest_rate}}</td>
-	</tr>
-	<tr>
-		<th>Loan Taken Date:</th>
-		<td>{{$loan->created_at}}</td>
-	</tr>
-</table><br>
-
-
-
-<b><a style="color:red;" href="{{route('payments.getPdf',$loan->id)}}">GENERATE PDF</a></b>
-
-<table class="table">
+	{{--Detail Table--}}
+	<table class="table">
 		<thead class="thead-dark">
-			<th>SN</th>
-			<th>Tranx Id</th>
-			<th>Payment Date</th>
-			<th>PBP</th>
-			<th>Amount</th>
-			<th>PAP</th>
-			<th>Last Date</th>
-			<th>Diffference in Date</th>
-			<th>Interest Amount</th>
-			<th>Action</th>
+		<th>SN</th>
+		<th>Trnx Id</th>
+		<th>Payment Date</th>
+		<th>PBP</th>
+		<th>Amount</th>
+		<th>PAP</th>
+		<th>Last Date</th>
+		<th>Difference in Date</th>
+		<th>Interest Amount</th>
+		<th>Action</th>
 		</thead>
 
-	@foreach($payments as $key=>$payment)
+		@foreach($payments as $key=>$payment)
+			<tr>
+				<td>{{++$key}}</td>
+				<td>{{$payment->id}}</td>
+				<td>{{$payment->created_at_date_only}}</td>
+				<td>{{$payment->pbp_rs}}</td>
+				<td>{{$payment->amount_rs}}</td>
+				<td>{{$payment->pap_rs}}</td>
+				<td>{{$payment->last_date_only}}</td>
+				<td>{{$payment->difference_in_date}}</td>
+				<td>{{$payment->interest_amount_round_value}}</td>
+				@if($payment->interest_paid == 0)
+					<td><i><a style="color: red" href="{{route('payment.ind.interest',$payment->id)}}" onclick="return confirm('Are you sure?')"><i>Pay Interest</i></a></i></td>
+				@else
+					<td><i style="color:#1c7430">Paid</i></td>
+				@endif
+			</tr>
+		@endforeach
 		<tr>
-			<td>{{++$key}}</td>
-			<td>{{$payment->id}}</td>
-			<td>{{$payment->created_at_date_only}}</td>
-			<td>{{$payment->pbp_rs}}</td>
-			<td>{{$payment->amount_rs}}</td>
-			<td>{{$payment->pap_rs}}</td>
-			<td>{{$payment->last_date_only}}</td>
-			<td>{{$payment->difference_in_date}}</td>
-			<td>{{$payment->interest_amount_round_value}}</td>
-			@if($payment->interest_paid == 0)
-				<td><i><a href="{{route('payment.ind.interest',$payment->id)}}"><i>Pay Interest</i></a></i></td>
-			@else
-				<td><i>Paid</i></td>
-            @endif
+			<td colspan="8" style="text-align: right;"><b>PAYBLE INTEREST AMOUNT</b></td>
+			<td><b>{{sprintf('Rs.%s/-',round($payments->where('interest_paid',0)->sum('interest_amount')))}}</b></td>
 		</tr>
-	@endforeach
-	<tr>
-		<td colspan="8" style="text-align: right;"><b>UNPAID INTEREST AMOUNT</b></td>
-		<td><b>{{sprintf('Rs.%s/-',round($payments->where('interest_paid',0)->sum('interest_amount')))}}</b></td>
-	</tr>
-	<tr>
-		<td colspan="8" style="text-align: right;"><b>TOTAL PAYMENT</b></td>
-		<td><b><u>{{sprintf('Rs.%s/-',$payments->sum('amount'))}}</u></b></td>
-        <td><b><i>Unpaid</i></b></td>
-	</tr>
-	<tr>
-		<td colspan="8" style="text-align: right;"><b>TOTAL INTEREST PAYABLE</b></td>
-		<td><b><u>{{sprintf('Rs.%s/-',round($payments->sum('interest_amount') ) )}}</u></b></td>
-		@if($payments->contains('interest_paid',0))
-        	<td><i><a href="{{route('payment.all.interest',$loan->id)}}">Pay</a></i></td>
-		@else
-			<td><b>Paid</b></td>
-		@endif
-	</tr>
-</table><br><br><br>
+		<tr>
+			<td colspan="8" style="text-align: right;"><b>TOTAL PAYMENT</b></td>
+			<td><b><u>{{sprintf('Rs.%s/-',$payments->sum('amount'))}}</u></b></td>
+			@if($payments->last()->pap == 0)
+				<td><b style="color: #1e7e34"><i>Loan Cleared</i></b></td>
+			@else
+				<td><b style="color:red"><i>Unclear</i></b></td>
+			@endif
+		</tr>
+		<tr>
+			<td colspan="8" style="text-align: right;"><b>TOTAL INTEREST AMOUNT</b></td>
+			<td><b><u>{{sprintf('Rs.%s/-',round($payments->sum('interest_amount') ) )}}</u></b></td>
+			@if($payments->contains('interest_paid',0))
+				<td><b><i><a href="{{route('payment.all.interest',$loan->id)}}" onClick="return confirm('Are you sure?')">Pay</a></i></b></td>
+			@else
+				<td><b>Paid</b></td>
+			@endif
+		</tr>
+	</table><br><br><br>
 
-
-
-<table class="table">
-	<thead class="thead-dark">
+	{{-- table with Dr/Cr--}}
+	<table class="table">
+		<thead class="thead-dark">
 		<th>Date</th>
 		<th>Trx Id</th>
 		<th>Cr</th>
 		<th>Dr</th>
 		<th>Interest Amount</th>
-	</thead>
-	<tr>
+		</thead>
+		<tr>
 			<!-- This section contains data from loan_id -->
 
-		<td>{{$loan->created_at->toDateString()}}</td>
-		<td>{{$loan->loan_id}}</td>
-		<td style="text-align: center;">-</td>
-		<td>{{$loan->amount_rs}}</td>
-		<td style="text-align: center;">-</td>
-	</tr>
-	@foreach($payments as $key=>$payment)
-	<tr>
-		<td>{{$payment->created_at_date_only}}</td>
-		<td>{{$payment->payment_id}}</td>
-		<td>{{$payment->amount_rs}}</td>
-		<td>{{$payment->pap_rs}}</td>
-		<td>{{$payment->interest_amount_round_value}}</td>
-	</tr>
-	@endforeach
-	<tr>
-		<th style="text-align: center;" colspan="2">Total</th>
-		<td><b>{{sprintf('Rs.%s/-',$payments->sum('amount'))}}</b></td>
-		<td></td>
-		<td><b>{{sprintf('Rs.%s/-',round($payments->sum('interest_amount',4) ) )}}</b></td>
-	</tr>
-</table>
+			<td>{{$loan->created_at->toDateString()}}</td>
+			<td>{{$loan->loan_id}}</td>
+			<td style="text-align: center;">-</td>
+			<td>{{$loan->amount_rs}}</td>
+			<td style="text-align: center;">-</td>
+		</tr>
+		@foreach($payments as $key=>$payment)
+			<tr>
+				<td>{{$payment->created_at_date_only}}</td>
+				<td>{{$payment->payment_id}}</td>
+				<td>{{$payment->amount_rs}}</td>
+				<td>{{$payment->pap_rs}}</td>
+				<td>{{$payment->interest_amount_round_value}}</td>
+			</tr>
+		@endforeach
+		<tr>
+			<th style="text-align: center;" colspan="2">Total</th>
+			<td><b>{{sprintf('Rs.%s/-',$payments->sum('amount'))}}</b></td>
+			<td></td>
+			<td><b>{{sprintf('Rs.%s/-',round($payments->sum('interest_amount',4) ) )}}</b></td>
+		</tr>
+	</table>
 @endsection

@@ -72,8 +72,18 @@ class LoansController extends Controller {
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show($id) {
-		//
+	// retrieve loan/s of specific client | comes from clients.show
+	public function show($id){
+    /*
+        $client = $this->client->find($id);
+        dd($client);
+        $loans = $client->loans;
+        return view('loan.show',compact('loans','client'));
+    */
+
+        $client = $this->client->with(['loans'])->find($id);
+        //dd($client);
+        return view('loan.show',compact('client'));
 
 	}
 
@@ -114,7 +124,6 @@ class LoansController extends Controller {
 		$loan = $this->loan->find($id);
 		$loan_detail = $this->loan->where('id', $id)->with(['types', 'clients'])->first();
 		$payments = $loan->payments()->orderBy('id', 'asc')->get();
-
 		return view('loan.custom', compact('payments', 'loan', 'loan_detail'));
 	}
 }
