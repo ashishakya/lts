@@ -24,7 +24,7 @@
 	<!-- {!! Form::label('rate','Interest Rate:')!!}
 	{!! Form::text('rate',null,['placeholder'=>'Interest Rate'])!!}<br>
 
- -->
+
 
 	{!! Form::submit('Save New Loan Type')!!}
 	{!! Form::reset('Reset')!!}

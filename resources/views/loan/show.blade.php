@@ -44,7 +44,7 @@
             @if($loan->payments()->exists())
                 <td><a href="{{route('loans.getById',$loan->id)}}">View Payments</a></td>
             @else
-                <td>NO PAYMENTS</td>
+                <td>No Payments</td>
             @endif
         </tr>
         @endforeach

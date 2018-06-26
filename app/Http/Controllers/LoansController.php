@@ -41,9 +41,8 @@ class LoansController extends Controller {
 			return $client;
 		})->pluck('name_contact', 'id');
 
-		// initial code
-		//$clients = $this->client->orderBy('id', 'asc')->get()->pluck('name', 'id');
 		$types = $this->type->all()->pluck('name', 'id');
+
 		return view('loan.create', compact('bindContact', 'types'));
 
 	}
@@ -54,7 +53,9 @@ class LoansController extends Controller {
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
+    // Request---->client_id | type_id | amount
 	public function store(Request $request) {
+
 		$type_id = $request->type_id;
 		$attributes = $request->all();
 
@@ -94,7 +95,7 @@ class LoansController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function edit($id) {
-		//
+
 	}
 
 	/**
@@ -105,7 +106,7 @@ class LoansController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function update(Request $request, $id) {
-		//
+
 	}
 
 	/**
@@ -115,15 +116,19 @@ class LoansController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function destroy($id) {
-		//
 
-		return 'this is destroy method';
 	}
 
-	public function getPaymentsByLoanId($id) {
+	public function getPaymentsByLoanId($id) { // loan id
+	/*
 		$loan = $this->loan->find($id);
 		$loan_detail = $this->loan->where('id', $id)->with(['types', 'clients'])->first();
 		$payments = $loan->payments()->orderBy('id', 'asc')->get();
 		return view('loan.custom', compact('payments', 'loan', 'loan_detail'));
+    */
+	    $loan = $this->loan->with(['payments','types','clients'])->find($id);
+	    return view('loan.custom',compact('loan'));
+
+
 	}
 }

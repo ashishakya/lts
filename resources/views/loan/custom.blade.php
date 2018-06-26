@@ -10,7 +10,7 @@
 	<table class="table table-sm">
 		<tr>
 			<th>Client Name:</th>
-			<td><b><a href="{{route('clients.show',$loan_detail->clients->id)}}">{{$loan_detail->clients->name}}</a></b></td>
+			<td><b><a href="{{route('clients.show',$loan->clients->id)}}">{{$loan->clients->name}}</a></b></td>
 		</tr>
 		<tr>
 			<th>Loan Id:</th>
@@ -22,7 +22,7 @@
 		</tr>
 		<tr>
 			<th>Loan Type:</th>
-			<td>{{$loan_detail->types->name}}</td>
+			<td>{{$loan->types->name}}</td>
 		</tr>
 		<tr>
 			<th>Interest Rate:</th>
@@ -51,7 +51,7 @@
 		<th>Action</th>
 		</thead>
 
-		@foreach($payments as $key=>$payment)
+		@foreach($loan->payments()->orderBy('id','asc')->get() as $key=>$payment)
 			<tr>
 				<td>{{++$key}}</td>
 				<td>{{$payment->id}}</td>
@@ -70,13 +70,14 @@
 			</tr>
 		@endforeach
 		<tr>
-			<td colspan="8" style="text-align: right;"><b>PAYBLE INTEREST AMOUNT</b></td>
-			<td><b>{{sprintf('Rs.%s/-',round($payments->where('interest_paid',0)->sum('interest_amount')))}}</b></td>
+			<td colspan="8" style="text-align: right;"><b>PAYABLE INTEREST AMOUNT</b></td>
+			<td><b>{{sprintf('Rs.%s/-',round($loan->payments->where('interest_paid',0)->sum('interest_amount')))}}</b></td>
 		</tr>
 		<tr>
 			<td colspan="8" style="text-align: right;"><b>TOTAL PAYMENT</b></td>
-			<td><b><u>{{sprintf('Rs.%s/-',$payments->sum('amount'))}}</u></b></td>
-			@if($payments->last()->pap == 0)
+			<td><b><u>{{sprintf('Rs.%s/-',$loan->payments->sum('amount'))}}</u></b></td>
+			{{--{dd($loan->payments()->orderBy('id','desc')->first())}}--}}
+			@if($loan->payments()->orderBy('id','desc')->first()->pap == 0)
 				<td><b style="color: #1e7e34"><i>Loan Cleared</i></b></td>
 			@else
 				<td><b style="color:red"><i>Unclear</i></b></td>
@@ -84,8 +85,8 @@
 		</tr>
 		<tr>
 			<td colspan="8" style="text-align: right;"><b>TOTAL INTEREST AMOUNT</b></td>
-			<td><b><u>{{sprintf('Rs.%s/-',round($payments->sum('interest_amount') ) )}}</u></b></td>
-			@if($payments->contains('interest_paid',0))
+			<td><b><u>{{sprintf('Rs.%s/-',round($loan->payments->sum('interest_amount') ) )}}</u></b></td>
+			@if($loan->payments->contains('interest_paid',0))
 				<td><b><i><a href="{{route('payment.all.interest',$loan->id)}}" onClick="return confirm('Are you sure?')">Pay</a></i></b></td>
 			@else
 				<td><b>Paid</b></td>
@@ -111,7 +112,7 @@
 			<td>{{$loan->amount_rs}}</td>
 			<td style="text-align: center;">-</td>
 		</tr>
-		@foreach($payments as $key=>$payment)
+		@foreach($loan->payments()->orderBy('id','asc')->get() as $key=>$payment)
 			<tr>
 				<td>{{$payment->created_at_date_only}}</td>
 				<td>{{$payment->payment_id}}</td>
@@ -122,9 +123,9 @@
 		@endforeach
 		<tr>
 			<th style="text-align: center;" colspan="2">Total</th>
-			<td><b>{{sprintf('Rs.%s/-',$payments->sum('amount'))}}</b></td>
+			<td><b>{{sprintf('Rs.%s/-',$loan->payments->sum('amount'))}}</b></td>
 			<td></td>
-			<td><b>{{sprintf('Rs.%s/-',round($payments->sum('interest_amount',4) ) )}}</b></td>
+			<td><b>{{sprintf('Rs.%s/-',round($loan->payments->sum('interest_amount',4) ) )}}</b></td>
 		</tr>
 	</table>
 @endsection

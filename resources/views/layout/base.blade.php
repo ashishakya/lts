@@ -57,6 +57,12 @@
           <span class="nav-link-text">Payment</span>
         </a>
       </li>
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+        <a class="nav-link" href="{{route('loans.create')}}">
+          <i class="fa fa-fw fa-table"></i>
+          <span class="nav-link-text">Issue Loan</span>
+        </a>
+      </li>
       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
         <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
           <i class="fa fa-fw fa-wrench"></i>
