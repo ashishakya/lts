@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Loan;
+namespace App\Http\Requests\Client;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateLoanRequest extends FormRequest
+class CreateClientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,9 @@ class CreateLoanRequest extends FormRequest
     {
         return [
             //
-            'type'  => 'required|min:3',
-            'rate'  => 'required|numeric|min:1',
+            'name'    => 'required',
+            'address' => 'required',
+            'contact' => 'required|numeric|digits:10'
         ];
     }
 }

@@ -18,12 +18,11 @@
 
 	<!-- for loan amount -->
 	{!! Form::label('amount','Amount:')!!}
-	{!! Form::text('amount',null,['placeholder'=>'Amount'])!!}<br>
+	{!! Form::text('amount',null,['placeholder'=>'Amount'])!!}{{$errors->first('amount')}}<br>
 
 	<!-- for interest rate:javaScript -->
 	<!-- {!! Form::label('rate','Interest Rate:')!!}
-	{!! Form::text('rate',null,['placeholder'=>'Interest Rate'])!!}<br>
-
+	{!! Form::text('rate',null,['placeholder'=>'Interest Rate'])!!}<br>-->
 
 
 	{!! Form::submit('Save New Loan Type')!!}

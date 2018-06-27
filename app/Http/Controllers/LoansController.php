@@ -55,6 +55,9 @@ class LoansController extends Controller {
 	 */
     // Request---->client_id | type_id | amount
 	public function store(Request $request) {
+	    $this->validate($request,[
+	        'amount' => 'required|numeric|min:1000'
+        ]);
 
 		$type_id = $request->type_id;
 		$attributes = $request->all();
@@ -128,7 +131,6 @@ class LoansController extends Controller {
     */
 	    $loan = $this->loan->with(['payments','types','clients'])->find($id);
 	    return view('loan.custom',compact('loan'));
-
 
 	}
 }

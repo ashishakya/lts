@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Http\Requests\Client\CreateClientRequest;
 use Illuminate\Http\Request;
 use App\Client;
 
@@ -22,10 +24,7 @@ class ClientsController extends Controller
 
     public function index()
     {
-
         $clients = $this->client->orderBy('id', 'asc')->get();
-
-
         return view('client.index', compact('clients'));
 
     }
@@ -48,11 +47,12 @@ class ClientsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateClientRequest $request)
     {
 
         $attributes = $request->all();
         $this->client->create($attributes);
+
         return redirect()->route('clients.index');
 
     }
@@ -83,6 +83,7 @@ class ClientsController extends Controller
     {
 
         $client = $this->client->find($id);
+
         return view('client.edit', compact('client'));
 
     }
@@ -117,6 +118,7 @@ class ClientsController extends Controller
     {
 
         $this->client->find($id)->delete();
+
         return redirect()->route('clients.index');
 
     }
@@ -124,13 +126,8 @@ class ClientsController extends Controller
     public function filter(Request $request)
     {
         $parameter = $request->parameter;
-        $clients   = $this->client
-                        ->where('name', 'ILIKE', '%'.$parameter.'%')
-                        ->orwhere('address', 'ILIKE', '%'.$parameter.'%')
-                        ->orwhere('address', 'ILIKE', '%'.$parameter.'%')
-                        ->orwhere('contact', 'LIKE', '%'.$parameter.'%')
-                        ->orderBy('id', 'asc')
-                        ->get();
+        $clients   = $this->client->where('name', 'ILIKE', '%'.$parameter.'%')->orwhere('address', 'ILIKE', '%'.$parameter.'%')->orwhere('address', 'ILIKE', '%'.$parameter.'%')->orwhere('contact', 'LIKE', '%'.$parameter.'%')->orderBy('id', 'asc')->get();
+
         return view('client.index', compact('clients'));
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Type\CreateTypeRequest;
 use App\Type;
 use Illuminate\Http\Request;
 
@@ -22,6 +23,7 @@ class TypesController extends Controller
      */
     public function index()
     {
+
         $types = $this->type->orderBy('id', 'asc')->get();
 
         return view('type.index', compact('types'));
@@ -45,7 +47,7 @@ class TypesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateTypeRequest  $request)
     {
 
         try {
@@ -82,7 +84,8 @@ class TypesController extends Controller
         return view('type.show', compact('type', 'loans'));
         */
         $type = $this->type->with(['loans'])->findOrFail($id);
-        return view('type.show',compact('type'));
+
+        return view('type.show', compact('type'));
     }
 
     /*

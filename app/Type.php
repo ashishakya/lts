@@ -23,4 +23,7 @@ class Type extends Model {
 	   return $this->attributes['name'] = ucwords($name);
     }
 
+
+
+
 }

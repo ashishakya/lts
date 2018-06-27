@@ -19,7 +19,7 @@ class PaymentsController extends Controller
 
     public function __construct(Loan $loan, Payment $payment)
     {
-        $this->loan = $loan;
+        $this->loan    = $loan;
         $this->payment = $payment;
     }
 
@@ -29,7 +29,6 @@ class PaymentsController extends Controller
         $payments = $this->payment->with(['client', 'type'])->orderBy('id')->get();
 
         return view('payment.index', compact('payments'));
-
     }
 
     /**
@@ -39,8 +38,10 @@ class PaymentsController extends Controller
      */
     public function create()
     {
-        //
-        $loans_id = $this->loan->all()->pluck('id', 'id'); //first pa
+
+
+        $loans_id = $this->loan->all()->pluck('id', 'id');
+
         return view('payment.create', compact('loans_id'));
     }
 
@@ -48,55 +49,110 @@ class PaymentsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
+
+    // loan_id and amount from payment.index
     public function store(Request $request)
     {
-        /*	// correct set of codes
-            // loan bata loan_id and amount aauncha
-            $attribute = $request->all();
-            //finding last payment for last_date
-            $payment = $this->loan->find($attribute['loan_id'])->payments()->latest()->first();
+        $this->validate(
+            $request,
+            [
+                'amount' => 'required|numeric|min:1',
+            ]
+        );
 
-            //checking relation for deciding value of $late_date
+        $attribute = $request->all();
+        $loan_id   = $attribute['loan_id'];
+        $loan      = $this->loan->find($loan_id);
+
+        $relation = $this->loan->find($attribute['loan_id'])->payments()->exists();
+        if ( $relation ) {
+
+            $payment = $loan->payments()->orderBy('id', 'desc')->first();
+            $due     = $payment->pap;
+            if ( $attribute['amount'] > $due ) {
+                return redirect()->back()->with('status', 'Payment amount greater than due amount');
+            } else {
+                return $this->paymentEntry($attribute);
+            }
+        } else {
+            $due = $loan->amount;
+            if ( $attribute['amount'] > $due ) {
+                return redirect()->back()->with('status', 'Payment amount greater than due amount');
+            } else {
+                return $this->paymentEntry($attribute);
+            }
+
+        }
+
+
+        /*
+        $loan_id = $request->loan_id;
+        $loan    = $this->loan->find($loan_id);
+        $payment = $loan->payments()->orderBy('id', 'desc')->first();
+        $due     = $payment->pap;
+
+
+        if ( $request->amount > $due ) {
+            return redirect()->back()->with('status', 'Payment amount greater than due amount');
+        } else {
+
+            $attribute = $request->all();
+            $payment   = $this->loan->find($attribute['loan_id'])->payments()->latest()->first();
+
             $relation = $this->loan->find($attribute['loan_id'])->payments()->exists();
 
-            if ($relation) {
-                //return 'relation exists';
+            if ( $relation ) {
                 $last_date = $payment->created_at;
-                $pbp = $payment->pap;
+                $pbp       = $payment->pap;
             } else {
-                //return 'relation does not exists';
                 $last_date = $this->loan->find($attribute['loan_id'])->created_at;
-                $pbp = $this->loan->find($attribute['loan_id'])->amount;
+                $pbp       = $this->loan->find($attribute['loan_id'])->amount;
             }
 
             $attribute['client_id'] = $this->loan->find($attribute['loan_id'])->client_id;
-            $attribute['type_id'] = $this->loan->find($attribute['loan_id'])->type_id;
+            $attribute['type_id']   = $this->loan->find($attribute['loan_id'])->type_id;
+
             $attribute['last_date'] = $last_date;
 
             $attribute['pbp'] = $pbp;
             $attribute['pap'] = $pbp - $attribute['amount'];
 
+            $today = Carbon::today()->toDateString();
+            $diff  = Carbon::parse($today)->diffInDays(Carbon::parse($last_date->toDateString()));
+
+            $interest_rate   = $this->loan->find($attribute['loan_id'])->interest;
+            $interest_amount = ($pbp * $interest_rate * $diff) / (100 * 365);
+
+            $attribute['interest_amount'] = $interest_amount;
             Payment::create($attribute);
+
             return redirect()->route('loans.index');
+
+        }
         */
 
-        $attribute = $request->all();
+
+    }
+
+    private function paymentEntry($attribute)
+    {
         $payment = $this->loan->find($attribute['loan_id'])->payments()->latest()->first();
 
         $relation = $this->loan->find($attribute['loan_id'])->payments()->exists();
 
-        if ($relation) {
+        if ( $relation ) {
             $last_date = $payment->created_at;
-            $pbp = $payment->pap;
+            $pbp       = $payment->pap;
         } else {
             $last_date = $this->loan->find($attribute['loan_id'])->created_at;
-            $pbp = $this->loan->find($attribute['loan_id'])->amount;
+            $pbp       = $this->loan->find($attribute['loan_id'])->amount;
         }
 
         $attribute['client_id'] = $this->loan->find($attribute['loan_id'])->client_id;
-        $attribute['type_id'] = $this->loan->find($attribute['loan_id'])->type_id;
+        $attribute['type_id']   = $this->loan->find($attribute['loan_id'])->type_id;
 
         $attribute['last_date'] = $last_date;
 
@@ -104,14 +160,16 @@ class PaymentsController extends Controller
         $attribute['pap'] = $pbp - $attribute['amount'];
 
         $today = Carbon::today()->toDateString();
-        $diff = Carbon::parse($today)->diffInDays(Carbon::parse($last_date->toDateString()));
+        $diff  = Carbon::parse($today)->diffInDays(Carbon::parse($last_date->toDateString()));
 
-        $interest_rate = $this->loan->find($attribute['loan_id'])->interest;
+        $interest_rate   = $this->loan->find($attribute['loan_id'])->interest;
         $interest_amount = ($pbp * $interest_rate * $diff) / (100 * 365);
 
         $attribute['interest_amount'] = $interest_amount;
+
         Payment::create($attribute);
-        return redirect()->route('loans.index');
+
+        return redirect(route('loans.index'));
 
     }
 
@@ -119,6 +177,7 @@ class PaymentsController extends Controller
      * Display the specified resource.
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -130,6 +189,7 @@ class PaymentsController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -141,7 +201,8 @@ class PaymentsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param  int                      $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -154,6 +215,7 @@ class PaymentsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -163,9 +225,10 @@ class PaymentsController extends Controller
 
     public function getPdf($id)
     {
-        $loan = $this->loan->find($id);
+        $loan        = $this->loan->find($id);
         $loan_detail = $this->loan->where('id', $id)->with(['types', 'clients'])->first();
-        $payments = $loan->payments()->orderBy('id', 'asc')->get();
+        $payments    = $loan->payments()->orderBy('id', 'asc')->get();
+
         return view('payment.pdf', compact('payments', 'loan', 'loan_detail'));
         //$pdf = PDF::loadView('payment.pdf', compact('payments', 'loan', 'loan_detail'));
         //return $pdf->download('Invoice.pdf');
@@ -175,15 +238,16 @@ class PaymentsController extends Controller
     {
         $payment = $this->payment->findOrFail($id);
         $payment->update(['interest_paid' => 1]);
+
         return redirect()->back();
 
     }
 
     public function updateAllInterest($id)
     {
-        $attributes = $this->payment->where('loan_id',$id)->get();
-        foreach ($attributes as $attribute){
-            $attribute->update(['interest_paid'=>1]);
+        $attributes = $this->payment->where('loan_id', $id)->get();
+        foreach ($attributes as $attribute) {
+            $attribute->update(['interest_paid' => 1]);
         }
         return redirect()->back();
     }
