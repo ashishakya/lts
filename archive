@@ -124,7 +124,7 @@ Route::get('diffInAmount/{id}', function ($id) {
 		echo 'relation exists' . '<br>';
 		echo 'last payment= ' . $pbp = $payment->amount . '<br>';
 	} else {
-		echo 'realtion does not exists';
+		echo 'relation does not exists';
 		echo 'last payment= ' . $pbp = $loan->amount;
 	}
 });
@@ -156,5 +156,17 @@ Route::get('update',function (){
 	    $clients = \App\Client::all();
 	    foreach ($clients as $client){
 	        $client->update(['address'=>ucwords($client->address)]);
+        }
+    });
+
+    // update loan_clear flag
+   Route::get('update',function () {
+        $loans = App\Loan::all();
+        foreach ($loans as $loan) {
+            if ( $loan->payments()->exists() ) {
+                if ( $loan->payments()->orderBy('id', 'desc')->first()->pap == 0 ) {
+                    $loan->update(['loan_clear' => 1]);
+                }
+            }
         }
     });

@@ -2,7 +2,14 @@
 @section('content')
 	<h1>LIST OF ALL ISSUED LOANS</h1><hr>
 
+	{!! Form::open(['method'=> 'GET','action'=>'LoansController@index']) !!}
+		{!! Form::select('loanView',['All Loan','Active Loan','Cleared Loan']) !!}
+		{!! Form::submit('Filter') !!}
+	{!! Form::close() !!}
+
+
     <h5 style="text-align:right;"><a href="{{route('loans.create')}}" style="color: green;">+ ISSUE NEW LOAN</a></h5>
+
 	<table class="table table-sm">
 		<thead class="thead-dark">
 			<th>Loan Id</th>
@@ -22,13 +29,14 @@
 				<td>{{$loan->amount_rs}}</td>
 				<td>{{$loan->interest_rate}}</td>
 
-				<!-- checks realation with payments	 -->
-
-				@if($loan->payments()->exists())
-					<td><a href="{{route('loans.getById',$loan->id)}}">View Payments</a></td>
-				@else
-					<td>No Payments</td>
-				@endif
+				<!-- checks relation with payments	 -->
+				<td>
+					@if($loan->payments()->exists())
+						<a href="{{route('loans.getById',$loan->id)}}">View Payments</a>
+					@else
+						No Payments
+					@endif
+				</td>
 			</tr>
 		@endforeach
 	</table>

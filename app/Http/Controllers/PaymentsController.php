@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Loan;
 use App\Payment;
+use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -223,16 +224,23 @@ class PaymentsController extends Controller
         //
     }
 
+    public function getDetailView($id)
+    {
+        $loan = $this->loan->with(['payments', 'types', 'clients'])->find($id);
+        return view('payment.detailView', compact('loan'));
+
+    }
+
+
     public function getPdf($id)
     {
-        $loan        = $this->loan->find($id);
-        $loan_detail = $this->loan->where('id', $id)->with(['types', 'clients'])->first();
-        $payments    = $loan->payments()->orderBy('id', 'asc')->get();
-
-        return view('payment.pdf', compact('payments', 'loan', 'loan_detail'));
-        //$pdf = PDF::loadView('payment.pdf', compact('payments', 'loan', 'loan_detail'));
-        //return $pdf->download('Invoice.pdf');
+        $loan = $this->loan->with(['payments', 'types', 'clients'])->find($id);
+        //return view('payment.pdf', compact('loan'));
+        $pdf = PDF::loadView('payment.pdf', compact('loan'));
+        return $pdf->download('Invoice.pdf');
     }
+
+
 
     public function updateIndividualInterest($id)
     {
@@ -251,6 +259,8 @@ class PaymentsController extends Controller
         }
         return redirect()->back();
     }
+
+
 }
 
 

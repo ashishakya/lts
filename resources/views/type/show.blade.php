@@ -1,8 +1,11 @@
+{{--Type ---->* loans--}}
+
 @extends('layout.base')
 @section('content')
 
 	<h1>{{$type->name}} Loans</h1>
 	<hr>
+
 	<table class="table table-sm">
 		<thead class="thead-dark">
 		<th>Loan Id</th>
@@ -22,7 +25,7 @@
 				<td>{{$loan->amount_rs}}</td>
 				<td>{{$loan->interest_rate}}</td>
 
-				<!-- checks realation with payments	 -->
+				<!-- checks relation with payments	 -->
 
 				@if($loan->payments()->exists())
 					<td><a href="{{route('loans.getById',$loan->id)}}">View Payments</a></td>
@@ -32,4 +35,5 @@
 			</tr>
 		@endforeach
 	</table>
+
 @endsection('content')

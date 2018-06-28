@@ -4297,7 +4297,7 @@
 	
 	
 	/**
-	 * Apply custom filtering functions
+	 * Apply partial filtering functions
 	 *  @param {object} oSettings dataTables settings object
 	 *  @memberof DataTable#oApi
 	 */
@@ -4379,7 +4379,7 @@
 		var display, invalidated, i;
 		var filtered = [];
 	
-		// Need to take account of custom filtering functions - always filter
+		// Need to take account of partial filtering functions - always filter
 		if ( DataTable.ext.search.length !== 0 ) {
 			force = true;
 		}
@@ -5537,7 +5537,7 @@
 	
 		/* If the number of columns in the DOM equals the number that we have to
 		 * process in DataTables, then we can use the offsets that are created by
-		 * the web- browser. No custom sizes can be set in order for this to happen,
+		 * the web- browser. No partial sizes can be set in order for this to happen,
 		 * nor scrolling used
 		 */
 		if ( ie67 || ! userInputs && ! scrollX && ! scrollY &&
@@ -5577,7 +5577,7 @@
 			// Remove any assigned widths from the footer (from scrolling)
 			tmpTable.find('tfoot th, tfoot td').css('width', '');
 	
-			// Apply custom sizing to the cloned header
+			// Apply partial sizing to the cloned header
 			headerCells = _fnGetUniqueThs( oSettings, tmpTable.find('thead')[0] );
 	
 			for ( i=0 ; i<visibleColumns.length ; i++ ) {
@@ -6262,7 +6262,7 @@
 	
 			if ( ! row._aSortData[idx] || customSort ) {
 				cellData = customSort ?
-					customData[i] : // If there was a custom sort function, use data from there
+					customData[i] : // If there was a partial sort function, use data from there
 					_fnGetCellData( settings, i, idx, 'sort' );
 	
 				row._aSortData[ idx ] = formatter ?
@@ -6325,7 +6325,7 @@
 				return;
 			}
 	
-			// Allow custom and plug-in manipulation functions to alter the saved data set and
+			// Allow partial and plug-in manipulation functions to alter the saved data set and
 			// cancelling of loading by returning false
 			var abStateLoad = _fnCallbackFire( settings, 'aoStateLoadParams', 'stateLoadParams', [settings, s] );
 			if ( $.inArray( false, abStateLoad ) !== -1 ) {
@@ -6606,7 +6606,7 @@
 	 *  @param {object} settings dataTables settings object
 	 *  @param {string} callbackArr Name of the array storage for the callbacks in
 	 *      oSettings
-	 *  @param {string} eventName Name of the jQuery custom event to trigger. If
+	 *  @param {string} eventName Name of the jQuery partial event to trigger. If
 	 *      null no trigger is fired
 	 *  @param {array} args Array of arguments to pass to the callback function /
 	 *      trigger
@@ -7900,7 +7900,7 @@
 	
 			// ID selector. Want to always be able to select rows by id, regardless
 			// of if the tr element has been created or not, so can't rely upon
-			// jQuery here - hence a custom implementation. This does not match
+			// jQuery here - hence a partial implementation. This does not match
 			// Sizzle's fast selector or HTML4 - in HTML5 the ID can be anything,
 			// but to select it using a CSS selector engine (like Sizzle or
 			// querySelect) it would need to need to be escaped for some characters.
@@ -9772,7 +9772,7 @@
 	
 		/**
 		 * Custom sorting data type - defines which of the available plug-ins in
-		 * afnSortData the custom sorting will use - if any is defined.
+		 * afnSortData the partial sorting will use - if any is defined.
 		 *  @type string
 		 *  @default std
 		 */
@@ -9848,7 +9848,7 @@
 		 * An array of data to use for the table, passed in at initialisation which
 		 * will be used in preference to any data which is already in the DOM. This is
 		 * particularly useful for constructing tables purely in Javascript, for
-		 * example with a custom Ajax call.
+		 * example with a partial Ajax call.
 		 *  @type array
 		 *  @default null
 		 *
@@ -10871,7 +10871,7 @@
 		 * superseded by that provided through `ajax`, which should be used instead.
 		 *
 		 *  It is often useful to send extra data to the server when making an Ajax
-		 * request - for example custom filtering information, and this callback
+		 * request - for example partial filtering information, and this callback
 		 * function makes it trivial to send extra information to the server. The
 		 * passed in parameter is the data set that has been constructed by
 		 * DataTables, and you can add to this or modify it as you require.
@@ -11129,7 +11129,7 @@
 		/**
 		 * Number of rows to display on a single page when using pagination. If
 		 * feature enabled (`lengthChange`) then the end user will be able to override
-		 * this to a custom setting using a pop-up menu.
+		 * this to a partial setting using a pop-up menu.
 		 *  @type int
 		 *  @default 10
 		 *
@@ -11542,7 +11542,7 @@
 			 * Detail the action that will be taken when the drop down menu for the
 			 * pagination length option is changed. The '_MENU_' variable is replaced
 			 * with a default select list of 10, 25, 50 and 100, and can be replaced
-			 * with a custom select box if required.
+			 * with a partial select box if required.
 			 *  @type string
 			 *  @default Show _MENU_ entries
 			 *
@@ -11786,7 +11786,7 @@
 		 * This initialisation variable allows you to specify exactly where in the
 		 * DOM you want DataTables to inject the various controls it adds to the page
 		 * (for example you might want the pagination controls at the top of the
-		 * table). DIV elements (with or without a custom class) can also be added to
+		 * table). DIV elements (with or without a partial class) can also be added to
 		 * aid styling. The follow syntax is used:
 		 *   <ul>
 		 *     <li>The following options are allowed:
@@ -13922,7 +13922,7 @@
 		 *  @default []
 		 *
 		 *  @example
-		 *    // The following example shows custom search being applied to the
+		 *    // The following example shows partial search being applied to the
 		 *    // fourth column (i.e. the data[3] index) based on two input values
 		 *    // from the end-user, matching the data in a certain range.
 		 *    $.fn.dataTable.ext.search.push(
@@ -13969,7 +13969,7 @@
 		 * * Options object (`selector-modifier` object type)
 		 * * Array of selected item indexes
 		 *
-		 * The return is an array of the resulting item indexes after the custom
+		 * The return is an array of the resulting item indexes after the partial
 		 * selector has been applied.
 		 *
 		 *  @type object
@@ -14067,7 +14067,7 @@
 	
 	
 		/**
-		 * Ordering plug-ins - custom data source
+		 * Ordering plug-ins - partial data source
 		 * 
 		 * The extension options for ordering of data available here is complimentary
 		 * to the default type based ordering that DataTables typically uses. It
@@ -14176,7 +14176,7 @@
 			 * Pre-processing of searching data plug-ins - When you assign the sType
 			 * for a column (or have it automatically detected for you by DataTables
 			 * or a type detection plug-in), you will typically be using this for
-			 * custom sorting, but it can also be used to provide custom searching
+			 * partial sorting, but it can also be used to provide partial searching
 			 * by allowing you to pre-processing the data and returning the data in
 			 * the format that should be searched upon. This is done by adding
 			 * functions this object with a parameter name which matches the sType
@@ -15185,7 +15185,7 @@
 	 *  @param {object} json JSON returned from the server
 	 *
 	 *  @example
-	 *     // Use a custom property returned from the server in another DOM element
+	 *     // Use a partial property returned from the server in another DOM element
 	 *     $('#table').dataTable().on('xhr.dt', function (e, settings, json) {
 	 *       $('#status').html( json.status );
 	 *     } );

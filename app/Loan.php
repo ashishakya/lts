@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Loan extends Model {
 	//
-	protected $fillable = ['client_id', 'type_id', 'amount', 'interest', 'issue_id', 'payment_id'];
+	protected $fillable = ['client_id', 'type_id', 'amount', 'interest', 'issue_id', 'payment_id' , 'loan_clear'];
 
 	public function clients() {
 		return $this->belongsTo('App\Client', 'client_id', 'id');
@@ -35,4 +35,17 @@ class Loan extends Model {
 	public function getLoanIdAttribute() {
 		return sprintf('LID-%s', $this->id);
 	}
+
+	public function getSumOfAmountAttribute(){
+	    return sprintf('Rs.%s/-',$this->payments()->sum('amount'));
+
+    }
+
+    public function getSumOfAllInterestAttribute(){
+	    return sprintf('Rs.%s/-',round($this->payments()->sum('interest_amount',4) ) );
+    }
+
+    public function getSumOfPayableInterestAttribute(){
+	    return sprintf('Pay All Payable Interest: Rs.%s/-',round($this->payments()->where('interest_paid',0)->sum('interest_amount')));
+    }
 }

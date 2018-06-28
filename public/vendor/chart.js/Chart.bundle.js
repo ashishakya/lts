@@ -8423,9 +8423,9 @@ module.exports = function(Chart) {
 				scales[scale.id] = scale;
 				scale.mergeTicksOptions();
 
-				// TODO(SB): I think we should be able to remove this custom case (options.scale)
+				// TODO(SB): I think we should be able to remove this partial case (options.scale)
 				// and consider it as a regular scale part of the "scales"" map only! This would
-				// make the logic easier and remove some useless? custom code.
+				// make the logic easier and remove some useless? partial code.
 				if (item.isDefault) {
 					me.scale = scale;
 				}
@@ -18276,7 +18276,7 @@ module.exports = function(Chart) {
 		bounds: 'data',
 
 		time: {
-			parser: false, // false == a pattern string from http://momentjs.com/docs/#/parsing/string-format/ or a custom callback that converts its argument to a moment
+			parser: false, // false == a pattern string from http://momentjs.com/docs/#/parsing/string-format/ or a partial callback that converts its argument to a moment
 			format: false, // DEPRECATED false == date objects, moment object, callback or a pattern string from http://momentjs.com/docs/#/parsing/string-format/
 			unit: false, // false == automatic or override with week, month, year, etc.
 			round: false, // none, or override with week, month, year, etc.

@@ -26,7 +26,7 @@ class UniqueName implements Rule
     public function passes($attribute, $value)
     {
         //
-        dd($attribute,$value);
+
         if($value == ucwords($value) )
            return false;
 

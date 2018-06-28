@@ -22,7 +22,11 @@ Route::group(['middleware' => 'web'], function () {
 
 	Route::get('loans/{id}/payments', ['as' => 'loans.getById', 'uses' => 'LoansController@getPaymentsByLoanId']);
 
-	Route::get('loans/{id}/payments/getPdf', ['as' => 'payments.getPdf', 'uses' => 'PaymentsController@getPdf']);
+	Route::get('loans/{id}/payments/detailView', ['as' => 'payments.detailView', 'uses' => 'PaymentsController@getDetailView']);
+	Route::get('loans/{id}/payments/pdf', ['as' => 'payments.pdf', 'uses' => 'PaymentsController@getPdf']);
+
+
+
 
 	Route::post('clients/filter', ['as' => 'clients.filter', 'uses' => 'ClientsController@filter']);
     Route::get('payments/{id}/interest', ['as' => 'payment.ind.interest', 'uses' => 'PaymentsController@updateIndividualInterest']);
@@ -31,6 +35,8 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('dashboard', function () {return view('layout.dashboard');});
 	Route::get('base', function () {return view('layout.base');});
 	Route::get('table', function () {return view('layout.table');});
+    Route::get('app', function () {return view('layout.app');});
+
 
 
 });
