@@ -96,7 +96,7 @@ class ClientsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateClientRequest $request, $id)
     {
 
         $attributes = $request->all();
@@ -126,9 +126,14 @@ class ClientsController extends Controller
     public function filter(Request $request)
     {
         $parameter = $request->parameter;
-        $clients   = $this->client->where('name', 'ILIKE', '%'.$parameter.'%')->orwhere('address', 'ILIKE', '%'.$parameter.'%')->orwhere('address', 'ILIKE', '%'.$parameter.'%')->orwhere('contact', 'LIKE', '%'.$parameter.'%')->orderBy('id', 'asc')->get();
+        $clients   = $this->client
+                ->where('name', 'ILIKE', '%'.$parameter.'%')
+                ->orwhere('address', 'ILIKE', '%'.$parameter.'%')
+                ->orwhere('address', 'ILIKE', '%'.$parameter.'%')
+                ->orwhere('contact', 'LIKE', '%'.$parameter.'%')
+                ->orderBy('id', 'asc')
+                ->get();
 
         return view('client.index', compact('clients'));
     }
-
 }

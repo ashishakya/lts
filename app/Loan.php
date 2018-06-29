@@ -17,14 +17,11 @@ class Loan extends Model {
 	}
 
 	public function payments() {
-		//return $this->hasMany('App\Payment', 'payment_id', 'id');
 
-        //return $this->hasMany('App\Payment');
         return $this->hasMany(Payment::class);
 	}
 
 	public function getInterestRateAttribute() {
-		//return sprintf('%s',$this->interest);
 		return $this->interest . '%';
 	}
 

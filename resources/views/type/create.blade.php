@@ -6,17 +6,13 @@
 	<a href="{{route('types.index')}}">VIEW ALL ACTIVE LOAN TYPES</a>
 	<hr>
 
-	{!! Form::open(['method'=>'POST','action'=>'TypesController@store']) !!}
+	{!! Form::open(['method'=>'POST','route'=>'types.store']) !!}
 
-		{!! Form::label('name','Loan Type: ')!!}
-		{!! Form::text('name',null,['placeholder'=>'Loan Type'])!!}{{$errors->first('name')}}<br>
-
-		{!! Form::label('rate','Interest Rate: ')!!}
-		{!! Form::text('rate',null,['placeholder'=>'Rate'])!!}{{$errors->first('rate')}}<br>
+		@include('type.partials.typeForm')
 
 		{!! Form::submit('Save New Loan Type')!!}
 		{!! Form::reset('Reset')!!}
 
 	{!! Form::close()!!}
 
-@endsection('content')
+@endsection

@@ -27,33 +27,19 @@ class LoansController extends Controller
     {
 
         $attribute = $request->all();
-        if ( !($request->has('loanView')) ) {
+        if ( (!($request->has('loanView'))) || ($attribute['loanView'] == 0) ) {
             $loans = $this->loan->with(['clients', 'types', 'payments'])->orderBy('id', 'asc')->get();
-
-            return view('loan.index', compact('loans'));
-        } elseif ( $attribute['loanView'] == 0 ) {
-            $loans = $this->loan->with(['clients', 'types', 'payments'])->orderBy('id', 'asc')->get();
-
-            return view('loan.index', compact('loans'));
 
         } elseif ( $attribute['loanView'] == 1 ) {
             $loans = $this->loan->with(['clients', 'types', 'payments'])->where('loan_clear', '=', 0)->orderBy('id', 'asc')->get();
-
-            return view('loan.index', compact('loans'));
 
 
         } elseif ( $attribute['loanView'] == 2 ) {
             $loans = $this->loan->with(['clients', 'types', 'payments'])->where('loan_clear', '=', 1)->orderBy('id', 'asc')->get();
 
-            return view('loan.index', compact('loans'));
         }
 
-
-        /*
-        $loans = $this->loan->with(['clients', 'types', 'payments'])->get();
-
         return view('loan.index', compact('loans'));
-        */
 
     }
 
@@ -119,16 +105,8 @@ class LoansController extends Controller
     // retrieve loan/s of specific client | comes from clients.show
     public function show($id)
     {
-        /*
-            $client = $this->client->find($id);
-            dd($client);
-            $loans = $client->loans;
-            return view('loan.show',compact('loans','client'));
-        */
-
         $client = $this->client->with(['loans'])->find($id);
 
-        //dd($client);
         return view('loan.show', compact('client'));
 
     }

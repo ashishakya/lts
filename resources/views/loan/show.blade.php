@@ -14,4 +14,4 @@
     @include('loan.partials.loanOfClient')
 
 
-@endsection('content')
+@endsection

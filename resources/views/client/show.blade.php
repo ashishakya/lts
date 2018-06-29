@@ -18,4 +18,4 @@
 			<td><a href="{{route('loans.show',$client->id)}}">Active Loans</a></td>
 		</tbody>
 	</table>
-@endsection('content')
+@endsection

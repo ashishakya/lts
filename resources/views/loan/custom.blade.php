@@ -7,13 +7,10 @@
 	{{--Loan Detail + Customer Detail at top --}}
 	@include('loan.partials.loanDetail')
 
-	{{--<b><a style="color:red;" href="{{route('payments.getPdf',$loan->id)}}">GENERATE PDF</a></b>--}}
-	{{--Payment Table: Detail View--}}
-	{{--@include('loan.partials.detailPaymentTable')--}}
-	{{--<hr>--}}
 	<b><a style="color:red;" href="{{route('payments.detailView',$loan->id)}}">View Detail View</a></b>
 	|
 	<b><a style="color:red;" href="{{route('payments.pdf',$loan->id)}}">Generate PDF</a></b>
+
 	{{--Payment Table: Official View--}}
 	@include('loan.partials.officialPaymentTable')
 

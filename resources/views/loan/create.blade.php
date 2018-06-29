@@ -7,7 +7,7 @@
 	<hr>
 
 
-	{!! Form::open(['method'=>'POST','action'=>'LoansController@store']) !!}
+	{!! Form::open(['method'=>'POST','route'=>'loans.store']) !!}
 		<!-- for client name -->
 		{!! Form::label('client_id','CLIENT NAME:')!!}
 		{!! Form::select('client_id', $bindContact)!!} <br>
@@ -29,6 +29,6 @@
 		{!! Form::reset('Reset')!!}
 	{!! Form::close()!!}
 
-@endsection('content')
+@endsection
 
 

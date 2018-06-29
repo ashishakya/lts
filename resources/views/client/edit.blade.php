@@ -1,27 +1,24 @@
 @extends('layout.base')
 
 @section('content')
+
 	<h1>UPDATE CLIENT'S DETAIL</h1>
 	<hr>
-	{!!	Form::model($client,['method'=>'PATCH','action'=>['ClientsController@update',$client->id]]) !!}
 
-		{!! Form::label('name','Client Name: ')!!}
-		{!! Form::text('name',null,['placeholder'=>'Client Name'])!!}<br>
+	{!!	Form::model($client,['method'=>'PATCH','route'=>['clients.update',$client->id] ]) !!}
 
-		{!! Form::label('address','Address: ')!!}
-		{!! Form::text('address',null,['placeholder'=>'Client\'s Address'])!!}<br>
+		@include('client.partials.clientForm')
 
-		{!! Form::label('contact','Contact: ')!!}
-		{!! Form::text('contact',null,['placeholder'=>'Contact'])!!}<br>
 
 		{!! Form::submit('Update Loan Type')!!}
 
 	{!! Form::close()!!}
 
 
-	{!! Form::open(['method'=>'DELETE','action'=>['ClientsController@destroy',$client->id]]) !!}
+	{!! Form::open(['method'=>'DELETE','route'=>['clients.destroy',$client->id]]) !!}
+
 		{!! Form::submit('DELETE')!!}
+
 	{!! Form::close()!!}
 
-
-@endsection()
+@endsection

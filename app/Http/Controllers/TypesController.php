@@ -72,17 +72,7 @@ class TypesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {   /*
-        try {
-            $type  = $this->type->findOrFail($id);
-            $loans = $type->loans;
-
-        } catch (ModelNotFoundException $modelNotFoundException) {
-            return back()->withInput()->withError('Failed to return desired page');
-        }
-
-        return view('type.show', compact('type', 'loans'));
-        */
+    {
         $type = $this->type->with(['loans'])->findOrFail($id);
 
         return view('type.show', compact('type'));
@@ -96,9 +86,8 @@ class TypesController extends Controller
     */
     public function edit($id)
     {
-        //
-        // return 'this is edit method';
-        $type = $this->type->find($id);
+
+        $type = $this->type->findOrFail($id);
 
         return view('type.edit', compact('type'));
     }
@@ -115,7 +104,7 @@ class TypesController extends Controller
     {
         //
         $attributes = $request->all();
-        $type       = $this->type->find($id);
+        $type       = $this->type->findOrFail($id);
         $type->update($attributes);
 
         return redirect('/types');
@@ -130,7 +119,7 @@ class TypesController extends Controller
      */
     public function destroy($id)
     {
-        $this->type->find($id)->delete();
+        $this->type->findOrFail($id)->delete();
 
         return redirect('/types');
     }

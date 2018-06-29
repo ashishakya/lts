@@ -2,7 +2,7 @@
 @section('content')
 	<h1>LIST OF ALL ISSUED LOANS</h1><hr>
 
-	{!! Form::open(['method'=> 'GET','action'=>'LoansController@index']) !!}
+	{!! Form::open(['method'=> 'GET','route'=>'loans.index']) !!}
 		{!! Form::select('loanView',['All Loan','Active Loan','Cleared Loan']) !!}
 		{!! Form::submit('Filter') !!}
 	{!! Form::close() !!}

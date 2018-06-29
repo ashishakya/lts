@@ -25,11 +25,14 @@
 			<td>{{$payment->amount_rs}}</td>
 			<td>{{$payment->pap_rs}}</td>
 			<td>{{$payment->interest_amount_round_value}}</td>
-			@if($payment->interest_paid == 0)
-				<td><i><a style="color: red" href="{{route('payment.ind.interest',$payment->id)}}" onclick="return confirm('Are you sure?')"><i>Pay Interest</i></a></i></td>
-			@else
-				<td><i style="color:#1c7430">Paid</i></td>
-			@endif
+			<td>
+				@if($payment->interest_paid == 0)
+					<i><a style="color: red" href="{{route('payments.ind.interest',$payment->id)}}" onclick="return confirm('Are you sure?')"><i>Pay Interest</i></a></i>
+				@else
+					<i style="color:#1c7430">Paid</i>
+				@endif
+			</td>
+
 		</tr>
 	@endforeach
 	<tr>
@@ -41,11 +44,13 @@
 
 		<td><b>{{$loan->sum_of_all_interest}}</b></td>
 
-		@if($loan->payments->contains('interest_paid',0))
-			<td><b><i><a href="{{route('payment.all.interest',$loan->id)}}" onClick="return confirm('Are you sure?')">{{$loan->sum_of_payable_interest}}</a></i></b></td>
-		@else
-			<td><b>Paid</b></td>
-		@endif
+		<td>
+			@if($loan->payments->contains('interest_paid',0))
+				<b><i><a href="{{route('payments.all.interest',$loan->id)}}" onClick="return confirm('Are you sure?')">{{$loan->sum_of_payable_interest}}</a></i></b>
+			@else
+				<b>Paid</b>
+			@endif
+		</td>
 	</tr>
 
 </table>

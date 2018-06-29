@@ -47,12 +47,12 @@
 	{{--Payment Table--}}
 	<table class="table table-bordered" style="width: 80%;">
 		<thead class="thead-dark">
-		<th>Date</th>
-		<th>Trx Id</th>
-		<th>Cr</th>
-		<th>Dr</th>
-		<th>Interest Amount</th>
-		<th>Action</th>
+			<th>Date</th>
+			<th>Trx Id</th>
+			<th>Cr</th>
+			<th>Dr</th>
+			<th>Interest Amount</th>
+			<th>Action</th>
 		</thead>
 		<tr>
 			<!-- This section contains data from loan_id -->

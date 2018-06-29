@@ -26,14 +26,15 @@
 				<td>{{$loan->interest_rate}}</td>
 
 				<!-- checks relation with payments	 -->
-
-				@if($loan->payments()->exists())
-					<td><a href="{{route('loans.getById',$loan->id)}}">View Payments</a></td>
-				@else
-					<td>No Payments</td>
-				@endif
+				<td>
+					@if($loan->payments()->exists())
+						<a href="{{route('loans.getById',$loan->id)}}">View Payments</a>
+					@else
+						No Payments
+					@endif
+				</td>
 			</tr>
 		@endforeach
 	</table>
 
-@endsection('content')
+@endsection

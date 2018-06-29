@@ -19,20 +19,16 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('clients', 'ClientsController');
 	Route::resource('loans', 'LoansController');
 	Route::resource('payments', 'PaymentsController');
-
 	Route::get('loans/{id}/payments', ['as' => 'loans.getById', 'uses' => 'LoansController@getPaymentsByLoanId']);
-
 	Route::get('loans/{id}/payments/detailView', ['as' => 'payments.detailView', 'uses' => 'PaymentsController@getDetailView']);
 	Route::get('loans/{id}/payments/pdf', ['as' => 'payments.pdf', 'uses' => 'PaymentsController@getPdf']);
-
-
-
-
 	Route::post('clients/filter', ['as' => 'clients.filter', 'uses' => 'ClientsController@filter']);
-    Route::get('payments/{id}/interest', ['as' => 'payment.ind.interest', 'uses' => 'PaymentsController@updateIndividualInterest']);
-    Route::get('loans/{id}/interest', ['as' => 'payment.all.interest', 'uses' => 'PaymentsController@updateAllInterest']);
+    Route::get('payments/{id}/interest', ['as' => 'payments.ind.interest', 'uses' => 'PaymentsController@updateIndividualInterest']);
+    Route::get('loans/{id}/interest', ['as' => 'payments.all.interest', 'uses' => 'PaymentsController@updateAllInterest']);
 
-	Route::get('dashboard', function () {return view('layout.dashboard');});
+
+
+    Route::get('dashboard', function () {return view('layout.dashboard');});
 	Route::get('base', function () {return view('layout.base');});
 	Route::get('table', function () {return view('layout.table');});
     Route::get('app', function () {return view('layout.app');});

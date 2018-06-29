@@ -9,10 +9,7 @@ class Type extends Model {
 	protected $fillable = ['name', 'rate'];
 
 	public function loans() {
-
-		//return $this->hasMany('App\Client', 'client_id', 'id');
-		//return $this->hasMany('App\Loan');
-        return $this->hasMany(Loan::class);
+         return $this->hasMany(Loan::class);
 	}
 
 	public function getRatePercentAttribute() {

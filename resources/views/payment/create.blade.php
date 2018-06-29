@@ -6,7 +6,7 @@
 	<a href="{{route('payments.index')}}">VIEW ALL PAYMENTS</a>
 	<hr>
 
-	{!! Form::open(['method'=>'POST','action'=>'PaymentsController@store']) !!}
+	{!! Form::open(['method'=>'POST','route'=>'payments.store']) !!}
 
 		{!! Form::label('loan_id','Loan ID: ')!!}
 		{!! Form::select('loan_id', $loans_id)!!}
@@ -25,4 +25,4 @@
 
 	{!! Form::close()!!}
 
-@endsection('content')
+@endsection
