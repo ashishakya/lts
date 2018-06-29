@@ -5,8 +5,9 @@
 	<th>Amount</th>
 	<th>Interest Rate</th>
 	<th>Action</th>
+	<th>Status</th>
 	</thead>
-	@foreach($client->loans as $loan)
+	@forelse($client->loans as $loan)
 		<tr>
 			<td>{{$loan->id}}</td>
 
@@ -23,7 +24,16 @@
 					No Payments
 				@endif
 			</td>
+			<td>
+				@if($loan->loan_clear == 1)
+					<b style="color: green">Loan Clear</b>
+				@else
+					<b style="color: red;">Pending</b>
+				@endif
+			</td>
 		</tr>
-	@endforeach
+	@empty
+		<b style="color:orange">Customer has no Loan Detail</b>
+	@endforelse
 
 </table>
