@@ -194,10 +194,9 @@ class PaymentsController extends Controller
     public function getPdf($id)
     {
         $loan = $this->loan->with(['payments', 'types', 'clients'])->find($id);
-
-        return view('payment.pdf', compact('loan'));
-        //$pdf = PDF::loadView('payment.pdf', compact('loan'));
-        //return $pdf->download('Invoice.pdf');
+        //return view('payment.pdf', compact('loan'));
+        $pdf = PDF::loadView('payment.pdf', compact('loan'));
+        return $pdf->download('Invoice.pdf');
     }
 
 
