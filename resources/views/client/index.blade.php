@@ -21,7 +21,9 @@
 							<th>Name </th>
 							<th>Address</th>
 							<th>Contact</th>
-							<th>Actions</th>
+							{{--@can('update',$clients)--}}
+								<th>Actions</th>
+							{{--@endcan--}}
 						</tr>
 					</thead>
 					@forelse($clients as $client)
@@ -30,7 +32,9 @@
 							<td><a href="{{route('clients.show',$client->id)}}">{{$client->name}}</a></td>
 							<td>{{$client->address}}</td>
 							<td>{{$client->contact}}</td>
-							<td><a href="{{route('clients.edit',$client->id)}}">Edit</a></td>
+							{{--@can('update',$client)--}}
+								<td><a href="{{route('clients.edit',$client->id)}}">Edit</a></td>
+							{{--@endcan--}}
 						</tbody>
 					@empty
 						<b style="color: orange">No Relative Client's Detail</b>

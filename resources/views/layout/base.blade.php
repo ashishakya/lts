@@ -65,6 +65,11 @@
 			</li>
 		</ul>
 		<ul class="navbar-nav ml-auto">
+
+				<b style="color: white">{{formattedDate(\Carbon\Carbon::now())}}</b>
+
+		</ul>
+		<ul class="navbar-nav ml-auto">
 			<li class="nav-item">
 				<a class="nav-link" data-toggle="modal" data-target="#exampleModal">
 					<i class="fa fa-fw fa-sign-out"></i>Logout</a>
@@ -81,7 +86,7 @@
 	<footer class="sticky-footer">
 		<div class="container">
 			<div class="text-center">
-				<small>Copyright © Ashishakya under supervision of Akita Nakarmi & Guided by Subham Dhakal ~ 2018</small>
+				<small>Copyright © Ashishakya under supervision of Akita Nakarmi ~ YIPL ~ 2018</small>
 			</div>
 		</div>
 	</footer>
@@ -90,23 +95,26 @@
 		<i class="fa fa-angle-up"></i>
 	</a>
 	<!-- Logout Modal-->
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">×</span>
-					</button>
-				</div>
-				<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-					<a class="btn btn-primary" href="#">Logout</a>
+
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+						<a class="btn btn-primary" href="{{route('logout')}}">Logout</a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+
+
 	<!-- Bootstrap core JavaScript-->
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

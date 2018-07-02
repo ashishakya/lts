@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Type\CreateTypeRequest;
 use App\Type;
+use App\User;
 use Illuminate\Http\Request;
 
 class TypesController extends Controller
@@ -14,6 +15,8 @@ class TypesController extends Controller
     public function __construct(Type $type)
     {
         $this->type = $type;
+        //$this->user =$user;
+        $this->middleware('auth');
     }
 
     /**
@@ -25,7 +28,7 @@ class TypesController extends Controller
     {
 
         $types = $this->type->orderBy('id', 'asc')->get();
-
+        //$user = $this->user;
         return view('type.index', compact('types'));
 
     }

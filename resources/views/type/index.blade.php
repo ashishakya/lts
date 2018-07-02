@@ -20,8 +20,10 @@
 			<td>{{$type->name}}</td>
 			<td>{{$type->rate_percent}}</td>
 			<td>
-				<a href="{{route('types.edit',$type->id)}}">Edit</a>
-				|
+				@can('update',$type)
+					<a href="{{route('types.edit',$type->id)}}">Edit</a>
+					|
+				@endcan
 				<a href="{{route('types.show',$type->id)}}">List</a>
 			</td>
 			</tbody>

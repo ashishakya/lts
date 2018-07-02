@@ -20,6 +20,7 @@ class ClientsController extends Controller
     public function __construct(Client $client)
     {
         $this->client = $client;
+        $this->middleware('auth');
     }
 
     public function index()

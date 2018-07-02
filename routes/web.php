@@ -11,7 +11,11 @@
 |
  */
 
-Route::get('/', 'LoansController@index');
+//Route::get('/', 'LoansController@index');
+
+Route::get('/', 'Auth\LoginController@showLoginForm');
+
+
 
 Route::group(['middleware' => 'web'], function () {
 
