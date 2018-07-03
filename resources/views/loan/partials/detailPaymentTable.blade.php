@@ -1,15 +1,15 @@
 <table class="table">
 	<thead class="thead-dark">
-		<th>SN</th>
-		<th>Trx Id</th>
-		<th>Payment Date</th>
-		<th>PBP</th>
-		<th>Amount</th>
-		<th>PAP</th>
-		<th>Last Date</th>
-		<th>Difference in Date</th>
-		<th>Interest Amount</th>
-		<th>Action</th>
+	<th>SN</th>
+	<th>Trx Id</th>
+	<th>Payment Date</th>
+	<th>PBP</th>
+	<th>Amount</th>
+	<th>PAP</th>
+	<th>Last Date</th>
+	<th>Difference in Date</th>
+	<th>Interest Amount</th>
+	<th>Action</th>
 	</thead>
 
 	@foreach($loan->payments()->orderBy('id','asc')->get() as $key=>$payment)

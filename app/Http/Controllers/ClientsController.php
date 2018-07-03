@@ -23,10 +23,23 @@ class ClientsController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $clients = $this->client->orderBy('id', 'asc')->get();
+        if ( $request->has('parameter') ) {
+            $parameter = $request->parameter;
+            $clients   = $this->client
+                ->where('name', 'ILIKE', '%'.$parameter.'%')
+                ->orwhere('address', 'ILIKE', '%'.$parameter.'%')
+                ->orwhere('address', 'ILIKE', '%'.$parameter.'%')
+                ->orwhere('contact', 'LIKE', '%'.$parameter.'%')
+                ->orderBy('id', 'asc')
+                ->get();
+        } else {
+            $clients = $this->client->orderBy('id', 'asc')->get();
+        }
+
         return view('client.index', compact('clients'));
+
 
     }
 
@@ -123,17 +136,11 @@ class ClientsController extends Controller
 
     }
 
-    public function filter(Request $request)
-    {
-        $parameter = $request->parameter;
-        $clients   = $this->client
-                ->where('name', 'ILIKE', '%'.$parameter.'%')
-                ->orwhere('address', 'ILIKE', '%'.$parameter.'%')
-                ->orwhere('address', 'ILIKE', '%'.$parameter.'%')
-                ->orwhere('contact', 'LIKE', '%'.$parameter.'%')
-                ->orderBy('id', 'asc')
-                ->get();
-
-        return view('client.index', compact('clients'));
-    }
+//    public function filter(Request $request)
+//    {
+//        $parameter = $request->parameter;
+//        $clients   = $this->client->where('name', 'ILIKE', '%'.$parameter.'%')->orwhere('address', 'ILIKE', '%'.$parameter.'%')->orwhere('address', 'ILIKE', '%'.$parameter.'%')->orwhere('contact', 'LIKE', '%'.$parameter.'%')->orderBy('id', 'asc')->get();
+//
+//        return view('client.index', compact('clients'));
+//    }
 }

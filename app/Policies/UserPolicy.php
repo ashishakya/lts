@@ -3,27 +3,26 @@
 namespace App\Policies;
 
 use App\User;
-use App\Type;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class TypePolicy
+class UserPolicy
 {
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view the type.
+     * Determine whether the user can view the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Type  $type
+     * @param  \App\User  $model
      * @return mixed
      */
-    public function view(User $user, Type $type)
+    public function view(User $user, User $model)
     {
         //
     }
 
     /**
-     * Determine whether the user can create types.
+     * Determine whether the user can create models.
      *
      * @param  \App\User  $user
      * @return mixed
@@ -34,26 +33,25 @@ class TypePolicy
     }
 
     /**
-     * Determine whether the user can update the type.
+     * Determine whether the user can update the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Type  $type
+     * @param  \App\User  $model
      * @return mixed
      */
-    public function update(User $user, Type $type)
+    public function update(User $user)
     {
-        return ($user->id == 1);
-
+        return ($user->id == 1 );
     }
 
     /**
-     * Determine whether the user can delete the type.
+     * Determine whether the user can delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Type  $type
+     * @param  \App\User  $model
      * @return mixed
      */
-    public function delete(User $user, Type $type)
+    public function delete(User $user, User $model)
     {
         //
     }

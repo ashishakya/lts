@@ -22,6 +22,7 @@ class PaymentsController extends Controller
     {
         $this->loan    = $loan;
         $this->payment = $payment;
+        $this->middleware('auth');
     }
 
     public function index()
@@ -106,8 +107,11 @@ class PaymentsController extends Controller
         $attribute['pbp'] = $pbp;
         $attribute['pap'] = $pbp - $attribute['amount'];
 
-        $today = Carbon::today()->toDateString();
-        $diff  = Carbon::parse($today)->diffInDays(Carbon::parse($last_date->toDateString()));
+        //$today = Carbon::today()->toDateString();
+        //$diff  = Carbon::parse($today)->diffInDays(Carbon::parse($last_date->toDateString()));
+        $diff = diffInDate(Carbon::today(),$last_date);
+
+        //dd($last_date,$diff);
 
         $interest_rate   = $this->loan->find($attribute['loan_id'])->interest;
         $interest_amount = ($pbp * $interest_rate * $diff) / (100 * 365);

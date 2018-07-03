@@ -65,8 +65,8 @@
 			</li>
 		</ul>
 		<ul class="navbar-nav ml-auto">
-
-				<b style="color: white">{{formattedDate(\Carbon\Carbon::now())}}</b>
+				<b style="color: white">Welcome {{ucwords(Auth::user()->name)}} &nbsp; </b>
+				<b style="color: white"> {{formattedDate(\Carbon\Carbon::today())}}</b>
 
 		</ul>
 		<ul class="navbar-nav ml-auto">

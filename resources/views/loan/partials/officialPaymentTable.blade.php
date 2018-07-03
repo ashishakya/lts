@@ -18,7 +18,7 @@
 		<td style="text-align: center;">-</td>
 
 	</tr>
-	@foreach($loan->payments()->orderBy('id','asc')->get() as $key=>$payment)
+	@foreach($loan->payments()->orderBy('id','asc')->get() as $payment)
 		<tr>
 			<td>{{$payment->created_at_date_only}}</td>
 			<td>{{$payment->payment_id}}</td>
@@ -46,7 +46,7 @@
 
 		<td>
 			@if($loan->payments->contains('interest_paid',0))
-				<b><i><a href="{{route('payments.all.interest',$loan->id)}}" onClick="return confirm('Are you sure?')">{{$loan->sum_of_payable_interest}}</a></i></b>
+				<b><i><a href="{{route('payments.all.interest',$loan->id)}}" onClick="return confirm('Are you sure?')">Pay All Payable Interest: {{$loan->sum_of_payable_interest}}</a></i></b>
 			@else
 				<b>Paid</b>
 			@endif

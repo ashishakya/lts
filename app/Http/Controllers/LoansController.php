@@ -21,6 +21,7 @@ class LoansController extends Controller
         $this->loan   = $loan;
         $this->client = $client;
         $this->type   = $type;
+        $this->middleware('auth');
     }
 
     public function index(Request $request)

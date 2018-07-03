@@ -20,7 +20,7 @@
 			<td>{{$type->name}}</td>
 			<td>{{$type->rate_percent}}</td>
 			<td>
-				@can('update',$type)
+				@can('update',\App\User::class)
 					<a href="{{route('types.edit',$type->id)}}">Edit</a>
 					|
 				@endcan
