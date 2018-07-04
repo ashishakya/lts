@@ -80,51 +80,48 @@ class PaymentsController extends Controller
         } else {
             return $this->paymentEntry($attribute);
         }
-
     }
 
 
 //    accepts whole attribute cuz we need to add more parameters to it
     private function paymentEntry($attribute)
     {
-        $payment = $this->loan->find($attribute['loan_id'])->payments()->latest()->first();
+        $loan = $this->loan->find($attribute['loan_id']);
 
-        $relation = $this->loan->find($attribute['loan_id'])->payments()->exists();
+        $lastPayment = $loan->payments()->latest()->first();
+
+        $relation = $loan->payments()->exists();
 
         if ( $relation ) {
-            $last_date = $payment->created_at;
-            $pbp       = $payment->pap;
+            $last_date = $lastPayment->created_at;
+            $pbp       = $lastPayment->pap;
         } else {
-            $last_date = $this->loan->find($attribute['loan_id'])->created_at;
-            $pbp       = $this->loan->find($attribute['loan_id'])->amount;
+            $last_date = $loan->created_at;
+            $pbp       = $loan->amount;
         }
 
-        $attribute['client_id'] = $this->loan->find($attribute['loan_id'])->client_id;
-        $attribute['type_id']   = $this->loan->find($attribute['loan_id'])->type_id;
+        $attribute['client_id'] = $loan->client_id;
+        $attribute['type_id']   = $loan->type_id;
 
         $attribute['last_date'] = $last_date;
 
         $attribute['pbp'] = $pbp;
         $attribute['pap'] = $pbp - $attribute['amount'];
 
-        //$today = Carbon::today()->toDateString();
-        //$diff  = Carbon::parse($today)->diffInDays(Carbon::parse($last_date->toDateString()));
-        $diff = diffInDate(Carbon::today(),$last_date);
+        $diff = diffInDate(Carbon::today(), $last_date);
 
-        //dd($last_date,$diff);
 
-        $interest_rate   = $this->loan->find($attribute['loan_id'])->interest;
+        $interest_rate   = $loan->interest;
         $interest_amount = ($pbp * $interest_rate * $diff) / (100 * 365);
 
         $attribute['interest_amount'] = $interest_amount;
-        // dd($attribute);
+        //dd($attribute);
         Payment::create($attribute);
 
         $this->checkLoanClear($attribute['loan_id']);
 
 
         return redirect(route('loans.index'));
-
     }
 
     private function checkLoanClear($loan_id)
@@ -133,7 +130,6 @@ class PaymentsController extends Controller
         if ( $loan->payments()->orderBy('id', 'desc')->first()->pap == 0 ) {
             $loan->update(['loan_clear' => 1]);
         }
-
     }
 
     /**
@@ -191,7 +187,6 @@ class PaymentsController extends Controller
         $loan = $this->loan->with(['payments', 'types', 'clients'])->find($id);
 
         return view('payment.detailView', compact('loan'));
-
     }
 
 
@@ -200,6 +195,7 @@ class PaymentsController extends Controller
         $loan = $this->loan->with(['payments', 'types', 'clients'])->find($id);
         //return view('payment.pdf', compact('loan'));
         $pdf = PDF::loadView('payment.pdf', compact('loan'));
+
         return $pdf->download('Invoice.pdf');
     }
 
@@ -210,7 +206,6 @@ class PaymentsController extends Controller
         $payment->update(['interest_paid' => 1]);
 
         return redirect()->back();
-
     }
 
     public function updateAllInterest($id)
@@ -222,8 +217,6 @@ class PaymentsController extends Controller
 
         return redirect()->back();
     }
-
-
 }
 
 

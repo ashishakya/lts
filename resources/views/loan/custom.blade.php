@@ -11,7 +11,7 @@
 	|
 	<b><a style="color:red;" href="{{route('payments.pdf',$loan->id)}}">Generate PDF</a></b>
 
-	<b style="float: right">Interest Till Date: {{$loan->InterestTillDate}}</b>
+	<b style="float: right">Accrued Interest: {{$loan->InterestTillDate}}</b>
 
 	{{--Payment Table: Official View--}}
 	@include('loan.partials.officialPaymentTable')

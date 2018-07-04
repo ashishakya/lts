@@ -19,12 +19,29 @@
 			<div class="table-responsive">
 				<table class="table table-bordered" width="100%" cellspacing="0">
 					<thead>
-					<tr><a href="{{route('clients.index',['key'=>'value'])}}" >asdsa</a>
-						<th>Id <i class="fa fa-fw fa-table" onclick="alert('helo')" style="float: right" ></i></th>
-						<th>Name <i class="fa fa-fw fa-table"></i></th>
-						<th>Address <i class="fa fa-fw fa-table"></i></th>
-						<th>Contact <i class="fa fa-fw fa-table"></i></th>
-						{{--@can('update', new \App\Client())--}}
+					<tr>
+						<th>Id
+							<div style="float: right">
+								<a href="{{route('clients.index',['field'=>'id','order'=>'asc'])}}">
+									<i class="fa fa-sort-numeric-asc"></i>								&nbsp;
+								</a>
+								<a href="{{route('clients.index',['field'=>'id','order'=>'desc'])}}">
+									<i class="fa fa-sort-numeric-desc"></i>								&nbsp;
+								</a>
+							</div>
+						</th>
+						<th>Name
+							<div style="float: right">
+								<a href="{{route('clients.index',['field'=>'name','order'=>'asc'])}}">
+									<i class="fa fa-sort-alpha-asc"></i>								&nbsp;
+								</a>
+								<a href="{{route('clients.index',['field'=>'name','order'=>'desc'])}}">
+									<i class="fa fa-sort-alpha-desc"></i>								&nbsp;
+								</a>
+							</div>
+						</th>
+						<th>Address</th>
+						<th>Contact</th>
 						@can('update',App\User::class)
 							<th>Actions</th>
 						@endcan

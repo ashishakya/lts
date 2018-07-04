@@ -22,6 +22,7 @@
 		@foreach($loans as $loan)
 			<tr>
 				<td>{{$loan->id}}</td>
+
 				<td><a href="{{route('clients.show',$loan->clients->id)}}">{{$loan->clients->name}}</a></td>
 
 				<td>{{$loan->types->name or ''}}</td>

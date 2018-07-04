@@ -25,7 +25,8 @@ class ClientsController extends Controller
 
     public function index(Request $request)
     {
-        if ( $request->has('parameter') ) {
+        if ( $request->has('parameter') )
+        {
             $parameter = $request->parameter;
             $clients   = $this->client
                 ->where('name', 'ILIKE', '%'.$parameter.'%')
@@ -34,13 +35,16 @@ class ClientsController extends Controller
                 ->orwhere('contact', 'LIKE', '%'.$parameter.'%')
                 ->orderBy('id', 'asc')
                 ->get();
-        } else {
+        }elseif ( $request->has('field', 'order') ){
+            $field   = $request->field;
+            $order   = $request->order;
+            $clients = $this->client->orderBy($field, $order)->get();
+
+        }else{
             $clients = $this->client->orderBy('id', 'asc')->get();
         }
 
         return view('client.index', compact('clients'));
-
-
     }
 
     /**
@@ -62,12 +66,9 @@ class ClientsController extends Controller
      */
     public function store(CreateClientRequest $request)
     {
-
         $attributes = $request->all();
         $this->client->create($attributes);
-
         return redirect()->route('clients.index');
-
     }
 
     /**
@@ -79,9 +80,7 @@ class ClientsController extends Controller
      */
     public function show(Client $client)   // Client::find($id)
     {
-
-//		$client = $this->client->find($id);
-
+        //$client = $this->client->find($id);
         return view('client.show', compact('client'));
     }
 
@@ -94,11 +93,8 @@ class ClientsController extends Controller
      */
     public function edit($id)
     {
-
         $client = $this->client->find($id);
-
         return view('client.edit', compact('client'));
-
     }
 
     /**
@@ -111,13 +107,10 @@ class ClientsController extends Controller
      */
     public function update(CreateClientRequest $request, $id)
     {
-
         $attributes = $request->all();
         $client     = $this->client->find($id);
         $client->update($attributes);
-
         return redirect()->route('clients.index');
-
     }
 
     /**
@@ -129,18 +122,7 @@ class ClientsController extends Controller
      */
     public function destroy($id)
     {
-
         $this->client->find($id)->delete();
-
         return redirect()->route('clients.index');
-
     }
-
-//    public function filter(Request $request)
-//    {
-//        $parameter = $request->parameter;
-//        $clients   = $this->client->where('name', 'ILIKE', '%'.$parameter.'%')->orwhere('address', 'ILIKE', '%'.$parameter.'%')->orwhere('address', 'ILIKE', '%'.$parameter.'%')->orwhere('contact', 'LIKE', '%'.$parameter.'%')->orderBy('id', 'asc')->get();
-//
-//        return view('client.index', compact('clients'));
-//    }
 }

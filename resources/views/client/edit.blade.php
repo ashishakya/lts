@@ -9,7 +9,6 @@
 
 		@include('client.partials.clientForm')
 
-
 		{!! Form::submit('Update Loan Type')!!}
 
 	{!! Form::close()!!}

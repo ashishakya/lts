@@ -25,10 +25,8 @@ class TypesController extends Controller
      */
     public function index()
     {
-
         $types = $this->type->orderBy('id', 'asc')->get();
         return view('type.index', compact('types'));
-
     }
 
     /**
@@ -50,7 +48,6 @@ class TypesController extends Controller
      */
     public function store(CreateTypeRequest  $request)
     {
-
         try {
             $attributes = $request->all();
 
@@ -75,7 +72,6 @@ class TypesController extends Controller
     public function show($id)
     {
         $type = $this->type->with(['loans'])->findOrFail($id);
-
         return view('type.show', compact('type'));
     }
 
@@ -87,9 +83,7 @@ class TypesController extends Controller
     */
     public function edit($id)
     {
-
         $type = $this->type->findOrFail($id);
-
         return view('type.edit', compact('type'));
     }
 
@@ -102,8 +96,7 @@ class TypesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {        //
         $attributes = $request->all();
         $type       = $this->type->findOrFail($id);
         $type->update($attributes);
@@ -121,7 +114,6 @@ class TypesController extends Controller
     public function destroy($id)
     {
         $this->type->findOrFail($id)->delete();
-
         return redirect('/types');
     }
 }

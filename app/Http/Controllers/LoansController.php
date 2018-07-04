@@ -26,22 +26,23 @@ class LoansController extends Controller
 
     public function index(Request $request)
     {
-
         $attribute = $request->all();
+
+        $loans = $this->loan->with(['clients', 'types', 'payments'])->orderBy('id', 'asc');
+
         if ( (!($request->has('loanView'))) || ($attribute['loanView'] == 0) ) {
-            $loans = $this->loan->with(['clients', 'types', 'payments'])->orderBy('id', 'asc')->get();
+            $loans = $loans->get();
 
         } elseif ( $attribute['loanView'] == 1 ) {
-            $loans = $this->loan->with(['clients', 'types', 'payments'])->where('loan_clear', '=', 0)->orderBy('id', 'asc')->get();
+            $loans = $loans->where('loan_clear', '=', 0)->get();
 
 
         } elseif ( $attribute['loanView'] == 2 ) {
-            $loans = $this->loan->with(['clients', 'types', 'payments'])->where('loan_clear', '=', 1)->orderBy('id', 'asc')->get();
+            $loans = $loans->where('loan_clear', '=', 1)->get();
 
         }
 
         return view('loan.index', compact('loans'));
-
     }
 
     /**
@@ -51,7 +52,6 @@ class LoansController extends Controller
      */
     public function create()
     {
-
         $clients     = $this->client->orderBy('id', 'asc')->get();
         $bindContact = $clients->map(
             function ($client) {
@@ -64,7 +64,6 @@ class LoansController extends Controller
         $types = $this->type->all()->pluck('name', 'id');
 
         return view('loan.create', compact('bindContact', 'types'));
-
     }
 
     /**
@@ -84,16 +83,14 @@ class LoansController extends Controller
             ]
         );
 
-        $type_id    = $request->type_id;
-        $attributes = $request->all();
-
-        $interest               = $this->type::find($type_id)->rate;
+        $attributes             = $request->all();
+        $type_id                = $attributes['type_id'];
+        $interest               = $this->type->find($type_id)->rate;
         $attributes['interest'] = $interest;
-
+        //dd($attributes);
         $this->loan->create($attributes);
 
         return redirect()->route('loans.index');
-
     }
 
     /**
@@ -107,9 +104,7 @@ class LoansController extends Controller
     public function show($id)
     {
         $client = $this->client->with(['loans'])->find($id);
-
         return view('loan.show', compact('client'));
-
     }
 
     /**
@@ -154,6 +149,5 @@ class LoansController extends Controller
         $loan = $this->loan->with(['payments', 'types', 'clients'])->find($id);
 
         return view('loan.custom', compact('loan'));
-
     }
 }
