@@ -19,7 +19,7 @@
 			<th>Interest Rate</th>
 			<th>Action</th>
 		</thead>
-		@foreach($loans as $loan)
+		@forelse($loans as $loan)
 			<tr>
 				<td>{{$loan->id}}</td>
 
@@ -39,6 +39,8 @@
 					@endif
 				</td>
 			</tr>
-		@endforeach
+		@empty
+			<b style="color: orange">No relevant Data</b>
+		@endforelse
 	</table>
 @endsection

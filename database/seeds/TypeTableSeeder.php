@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Type;
+
 class TypeTableSeeder extends Seeder
 {
     /**
@@ -10,14 +10,24 @@ class TypeTableSeeder extends Seeder
      * @return void
      */
     public function run()
-    {   
-        for($i=1;$i<=10;$i++){
-            Type::insert([
-                'name'=>str_random(10),
-                'rate'=>rand(0,1)
-             ]);  
-        }        	        
-        
+    {
+        $types = collect(
+            [
+                [
+                    'name' => 'Home loan',
+                    'rate' => 20,
+                ],
+                [
+                    'name' => 'Education loan',
+                    'rate' => 12,
+                ],
+            ]
+        );
+        $types->each(
+            function ($type) {
+                \App\Type::create($type);
+            }
+        );
     }
- 
+
 }

@@ -27,7 +27,7 @@
 			<td>{{$payment->client->name}}</td>
 			<td>{{$payment->amount_rs}}</td>
 			<td>{{$payment->loan_id}}</td>
-			<td>{{$payment->type->name}}</td>
+			<td>{{$payment->type->name or ' '}}</td>
 			<td>{{$payment->created_at}}</td>
 			<td><a href="">Action</a></td>
 			</tbody>

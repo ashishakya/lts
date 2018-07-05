@@ -39,6 +39,10 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('base', function () {return view('layout.base');});
     Route::get('app', function () {return view('layout.app');});
 
+    Route::get('api/data',function (){
+
+        return ['name'=>'ram','age'=>22];
+    });
 
 
 });

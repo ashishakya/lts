@@ -13,15 +13,6 @@ class LoanTableSeeder extends Seeder
      */
     public function run()
     {
-        //
-        Loan::insert([
-
-                     ]);
-
-
-        factory(App\Loan::class, 5)->create()->each(function ($u) {
-            $u->clients()->save(factory(App\Client::class)->make());
-        });
-
+        factory(Loan::class,20)->create();
     }
 }

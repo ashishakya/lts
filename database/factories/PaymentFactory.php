@@ -1,11 +1,13 @@
 <?php
 
-
-use App\Type;
+use App\Client;
+use App\Loan;
+use App\Payment;
+use Carbon\Carbon;
 use Faker\Generator as Faker;
 
-    /*
-    |--------------------------------------------------------------------------
+/*
+|--------------------------------------------------------------------------
 | Model Factories
 |--------------------------------------------------------------------------
 |
@@ -16,11 +18,9 @@ use Faker\Generator as Faker;
  */
 
 $factory->define(
-    Type::class,
+    Payment::class,
     function (Faker $faker) {
-        return [
-            'name' => $faker->unique()->randomElement(['Agricultural', 'Home', 'Personal', 'Business']),
-            'rate' => $faker->numberBetween(1, 15),
-        ];
+
     }
 );
+
