@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder {
             TypeTableSeeder::class,
             ClientTableSeeder::class,
             LoanTableSeeder::class,
-            PaymentTableSeeder::class,
+            PaymentsTableSeeder::class,
                     ]);
 	}
 }

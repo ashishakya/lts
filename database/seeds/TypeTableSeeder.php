@@ -23,6 +23,7 @@ class TypeTableSeeder extends Seeder
                 ],
             ]
         );
+       // dd($types);
         $types->each(
             function ($type) {
                 \App\Type::create($type);
