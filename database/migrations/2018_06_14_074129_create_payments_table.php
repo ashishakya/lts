@@ -15,10 +15,15 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
-            $table->float('amount');
             $table->integer('client_id');
             $table->integer('loan_id');
-            
+            $table->integer('type_id');
+            $table->float('amount');
+            $table->dateTime('last_date');
+            $table->float('interest_amount');
+            $table->float('pbp');
+            $table->float('pap');
+            $table->tinyInteger('interest_paid')->default(0);
             $table->timestamps();
         });
     }

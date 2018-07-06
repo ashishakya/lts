@@ -19,8 +19,7 @@ class CreateLoansTable extends Migration
             $table->integer('type_id');
             $table->float('amount');
             $table->float('interest');
-            $table->integer('issue_id')->nullable();
-            $table->integer('payment_id')->nullable();            
+            $table->tinyInteger('loan_clear')->default(0);
             $table->timestamps();
         });
     }
