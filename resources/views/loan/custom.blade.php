@@ -7,9 +7,16 @@
 	{{--Loan Detail + Customer Detail at top --}}
 	@include('loan.partials.loanDetail')
 
-	<b><a style="color:red;" href="{{route('payments.detailView',$loan->id)}}">View Detail View</a></b>
-	|
-	<b><a style="color:red;" href="{{route('payments.pdf',$loan->id)}}">Generate PDF</a></b>
+	<a style="color:red;" href="{{route('payments.detailView',$loan->id)}}">
+		<i class="fa fa-external-link-square" aria-hidden="true"></i>
+	</a>
+	&nbsp;
+	<a style="color:red;" href="{{route('payments.pdf',$loan->id)}}">
+		<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+	</a>
+
+
+
 
 	<b style="float: right">Accrued Interest: {{$loan->InterestTillDate}}</b>
 

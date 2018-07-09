@@ -23,7 +23,7 @@
 						<th>Id
 							<div style="float: right">
 								<a href="{{route('clients.index',['field'=>'id','order'=>'asc'])}}">
-									<i class="fa fa-sort-numeric-asc"></i>								&nbsp;
+									<i class="fa fa-sort-numeric-asc"></i>&nbsp;
 								</a>
 								<a href="{{route('clients.index',['field'=>'id','order'=>'desc'])}}">
 									<i class="fa fa-sort-numeric-desc"></i>								&nbsp;

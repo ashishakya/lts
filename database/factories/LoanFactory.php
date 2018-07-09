@@ -25,7 +25,7 @@ $factory->define(
         $type =  $loanTypes->random();
         $clients = \App\Client::all();
         return [
-            'amount'    => $faker->numberBetween(100000, 500000),
+            'amount'    => ($faker->numberBetween(10000, 50000))*10,
             'client_id' => $clients->random()->id,
             'type_id'   => $type->id,
             'interest'  => $type->rate,

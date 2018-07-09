@@ -20,9 +20,9 @@ $factory->define(
         return [
             'name'    => $faker->name,
             //		'address' => $faker->randomElement(['Bagbazar', 'Sukute', 'Rsr', 'Lekhnath', 'Teku', 'Balaju']),
-            'address' => $faker->streetName,
-            'contact' => $faker->phoneNumber,
-            //'contact' => $faker->numberBetween(9841000000, 9841999999),
+            'address' => $faker->state,
+            //'contact' => $faker->phoneNumber,
+            'contact' => $faker->unique()->numberBetween(9841000000, 9841999999),
         ];
     }
 );

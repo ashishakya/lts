@@ -43,4 +43,9 @@
 			<b style="color: orange">No relevant Data</b>
 		@endforelse
 	</table>
+	<div class="row">
+		<div class="col-sm-6 col-sm-offset-5">
+			{{$loans->render()}}
+		</div>
+	</div>
 @endsection

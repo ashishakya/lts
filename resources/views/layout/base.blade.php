@@ -35,13 +35,13 @@
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
 				<a class="nav-link" href="{{route('loans.index')}}">
-					<i class="fa fa-fw fa-dashboard"></i>
+					<i class="fa fa-home" aria-hidden="true"></i>
 					<span class="nav-link-text">Home</span>
 				</a>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
 				<a class="nav-link" href="{{route('clients.index')}}">
-					<i class="fa fa-fw fa-area-chart"></i>
+					<i class="fa fa-user" aria-hidden="true"></i>
 					<span class="nav-link-text">All Clients</span>
 				</a>
 			</li>
@@ -53,20 +53,20 @@
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
 				<a class="nav-link" href="{{route('payments.create')}}">
-					<i class="fa fa-fw fa-table"></i>
+					<i class="fa fa-money" aria-hidden="true"></i>
 					<span class="nav-link-text">Payment</span>
 				</a>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
 				<a class="nav-link" href="{{route('loans.create')}}">
-					<i class="fa fa-fw fa-table"></i>
+					<i class="fa fa-calculator" aria-hidden="true"></i>
 					<span class="nav-link-text">Issue Loan</span>
 				</a>
 			</li>
 		</ul>
 		<ul class="navbar-nav ml-auto">
-				<b style="color: white">Welcome {{ucwords(Auth::user()->name)}} &nbsp; </b>
-				<b style="color: white"> {{formattedDate(\Carbon\Carbon::today())}}</b>
+			<b style="color: white">Welcome {{ucwords(Auth::user()->name)}} &nbsp; </b>
+			<b style="color: white"> {{formattedDate(\Carbon\Carbon::today())}}</b>
 
 		</ul>
 		<ul class="navbar-nav ml-auto">
@@ -96,23 +96,23 @@
 	</a>
 	<!-- Logout Modal-->
 
-		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">×</span>
-						</button>
-					</div>
-					<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-					<div class="modal-footer">
-						<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-						<a class="btn btn-primary" href="{{route('logout')}}">Logout</a>
-					</div>
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary" href="{{route('logout')}}">Logout</a>
 				</div>
 			</div>
 		</div>
+	</div>
 
 
 	<!-- Bootstrap core JavaScript-->

@@ -31,14 +31,17 @@ class LoansController extends Controller
         $loans = $this->loan->with(['clients', 'types', 'payments'])->orderBy('id', 'asc');
 
         if ( (!($request->has('loanView'))) || ($attribute['loanView'] == 0) ) {
-            $loans = $loans->get();
+//            $loans = $loans->get();
+            $loans = $loans->simplePaginate(5);
 
         } elseif ( $attribute['loanView'] == 1 ) {
-            $loans = $loans->where('loan_clear', '=', 0)->get();
+//            $loans = $loans->where('loan_clear', '=', 0)->get();
+            $loans = $loans->where('loan_clear', '=', 0)->paginate(5);
 
 
         } elseif ( $attribute['loanView'] == 2 ) {
-            $loans = $loans->where('loan_clear', '=', 1)->get();
+//            $loans = $loans->where('loan_clear', '=', 1)->get();
+            $loans = $loans->where('loan_clear', '=', 1)->paginate(5);
 
         }
 

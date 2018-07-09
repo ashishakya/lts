@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 
+use App\Exports\ClientsExport;
 use App\Http\Requests\Client\CreateClientRequest;
 use Illuminate\Http\Request;
 use App\Client;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ClientsController extends Controller
 {
@@ -124,5 +126,9 @@ class ClientsController extends Controller
     {
         $this->client->find($id)->delete();
         return redirect()->route('clients.index');
+    }
+
+    public function exportExcel(){
+        return Excel::download(new ClientsExport,'invoice.xlsx');
     }
 }

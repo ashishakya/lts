@@ -29,9 +29,10 @@ Route::group(['middleware' => 'web'], function () {
 	//Route::post('clients/filter', ['as' => 'clients.filter', 'uses' => 'ClientsController@filter']);
     Route::get('payments/{id}/interest', ['as' => 'payments.ind.interest', 'uses' => 'PaymentsController@updateIndividualInterest']);
     Route::get('loans/{id}/interest', ['as' => 'payments.all.interest', 'uses' => 'PaymentsController@updateAllInterest']);
-
-
     Route::get('logout','Auth\LoginController@logout')->name('logout');
+
+
+    Route::get('excel','ClientsController@exportExcel');
 
 
 
@@ -39,10 +40,6 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('base', function () {return view('layout.base');});
     Route::get('app', function () {return view('layout.app');});
 
-    Route::get('api/data',function (){
-
-        return ['name'=>'ram','age'=>22];
-    });
 
 
 });

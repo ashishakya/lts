@@ -18,9 +18,9 @@ class CreatePaymentsTable extends Migration
             $table->integer('client_id');
             $table->integer('loan_id');
             $table->integer('type_id');
-            $table->float('amount');
+            $table->float('amount',8,2);
             $table->dateTime('last_date');
-            $table->float('interest_amount');
+            $table->decimal('interest_amount',8,2);
             $table->float('pbp');
             $table->float('pap');
             $table->tinyInteger('interest_paid')->default(0);
