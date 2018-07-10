@@ -14,14 +14,12 @@
 		{!! Form::label('amount','Amount: ')!!}
 		{!! Form::text('amount',null)!!} {{$errors->first('amount')}}<br>
 
-		@if (session('status'))
-			<div class="alert alert-danger">
-				{{ session('status') }}
-			</div>
-		@endif
+		@include('flash::message')
 
 		{!! Form::submit('Submit to Pay')!!}
 		{!! Form::reset('Reset')!!}
+
+
 
 	{!! Form::close()!!}
 

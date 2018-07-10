@@ -16,6 +16,8 @@
 	<link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 	<!-- Custom styles for this template-->
 	<link href="/css/sb-admin.css" rel="stylesheet">
+	{{--css link for flash--}}
+	{{--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">--}}
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">

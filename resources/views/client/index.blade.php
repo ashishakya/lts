@@ -14,7 +14,10 @@
 				{!! Form::submit('Find')!!}
 			{!! Form::close()!!} <br>
 
-			<h5 style="text-align:right;"><a href="{{route('clients.create')}}" style="color: green;">+ REGISTER NEW CLIENT</a></h5>
+			<div>
+				<a href="{{route('clientExcel')}}"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+				<h5 style="float:right; display:inline"><a href="{{route('clients.create')}}" style="color: green;">+ REGISTER NEW CLIENT</a></h5>
+			</div>
 
 			<div class="table-responsive">
 				<table class="table table-bordered" width="100%" cellspacing="0">

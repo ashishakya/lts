@@ -76,7 +76,9 @@ class PaymentsController extends Controller
         }
 
         if ( $attribute['amount'] > $due ) {
-            return redirect()->back()->with('status', 'Payment amount greater than due amount');
+//            return redirect()->back()->with('status', 'Payment amount greater than due amount');
+            flash()->warning('Error Alert: Payment amount greater than due amount');
+            return redirect()->back();
         } else {
             return $this->paymentEntry($attribute);
         }
