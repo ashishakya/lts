@@ -1,7 +1,7 @@
 @extends('layout.base')
 
 @section('content')
-
+	@include('flash::message')
 	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fa fa-table"></i> LIST OF ALL CLIENTS
@@ -45,7 +45,7 @@
 						</th>
 						<th>Address</th>
 						<th>Contact</th>
-						@can('update',App\User::class)
+						@can('update',\App\Client::class)
 							<th>Actions</th>
 						@endcan
 					</tr>
@@ -56,7 +56,7 @@
 						<td><a href="{{route('clients.show',$client->id)}}">{{$client->name}}</a></td>
 						<td>{{$client->address}}</td>
 						<td>{{$client->contact}}</td>
-						@can('update',\App\User::class)
+						@can('update',\App\Client::class)
 							<td><a href="{{route('clients.edit',$client->id)}}">Edit</a></td>
 						@endcan
 						</tbody>

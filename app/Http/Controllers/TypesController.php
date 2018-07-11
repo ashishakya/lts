@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Type\CreateTypeRequest;
 use App\Type;
-use App\User;
+use Exception;
 use Illuminate\Http\Request;
 
 class TypesController extends Controller
@@ -26,6 +26,7 @@ class TypesController extends Controller
     public function index()
     {
         $types = $this->type->orderBy('id', 'asc')->get();
+
         return view('type.index', compact('types'));
     }
 
@@ -46,14 +47,14 @@ class TypesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateTypeRequest  $request)
+    public function store(CreateTypeRequest $request)
     {
         try {
             $attributes = $request->all();
 
             $this->type->create($attributes);
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             logger()->error($exception);
 
             return back()->withInput()->withError('Failed to create type.');
@@ -72,6 +73,7 @@ class TypesController extends Controller
     public function show($id)
     {
         $type = $this->type->with(['loans'])->findOrFail($id);
+
         return view('type.show', compact('type'));
     }
 
@@ -83,7 +85,15 @@ class TypesController extends Controller
     */
     public function edit($id)
     {
+        try {
+            $this->authorize('update', Type::class);
+        } catch (Exception $e) {
+            flash()->warning('Alert: Unauthorised Access');
+            return redirect()->route('types.index');
+        }
+
         $type = $this->type->findOrFail($id);
+
         return view('type.edit', compact('type'));
     }
 
@@ -114,6 +124,7 @@ class TypesController extends Controller
     public function destroy($id)
     {
         $this->type->findOrFail($id)->delete();
+
         return redirect('/types');
     }
 }

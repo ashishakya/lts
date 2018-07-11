@@ -1,7 +1,7 @@
 @extends('layout.base')
 
 @section('content')
-
+	@include('flash::message');
 	<h1>LIST OF LOAN TYPES</h1>
 	<hr>
 
@@ -20,7 +20,7 @@
 			<td>{{$type->name}}</td>
 			<td>{{$type->rate_percent}}</td>
 			<td>
-				@can('update',\App\User::class)
+				@can('update',\App\Type::class)
 					<a href="{{route('types.edit',$type->id)}}">Edit</a>
 					|
 				@endcan

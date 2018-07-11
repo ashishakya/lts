@@ -32,16 +32,16 @@ class LoansController extends Controller
 
         if ( (!($request->has('loanView'))) || ($attribute['loanView'] == 0) ) {
 //            $loans = $loans->get();
-            $loans = $loans->simplePaginate(5);
+            $loans = $loans->simplePaginate(20);
 
         } elseif ( $attribute['loanView'] == 1 ) {
 //            $loans = $loans->where('loan_clear', '=', 0)->get();
-            $loans = $loans->where('loan_clear', '=', 0)->paginate(5);
+            $loans = $loans->where('loan_clear', '=', 0)->paginate(20);
 
 
         } elseif ( $attribute['loanView'] == 2 ) {
 //            $loans = $loans->where('loan_clear', '=', 1)->get();
-            $loans = $loans->where('loan_clear', '=', 1)->paginate(5);
+            $loans = $loans->where('loan_clear', '=', 1)->paginate(20);
 
         }
 

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 
+use App\Client;
 use App\Exports\ClientsExport;
 use App\Http\Requests\Client\CreateClientRequest;
+use Exception;
 use Illuminate\Http\Request;
-use App\Client;
 use Maatwebsite\Excel\Facades\Excel;
+
 
 class ClientsController extends Controller
 {
@@ -27,22 +29,15 @@ class ClientsController extends Controller
 
     public function index(Request $request)
     {
-        if ( $request->has('parameter') )
-        {
+        if ( $request->has('parameter') ) {
             $parameter = $request->parameter;
-            $clients   = $this->client
-                ->where('name', 'ILIKE', '%'.$parameter.'%')
-                ->orwhere('address', 'ILIKE', '%'.$parameter.'%')
-                ->orwhere('address', 'ILIKE', '%'.$parameter.'%')
-                ->orwhere('contact', 'LIKE', '%'.$parameter.'%')
-                ->orderBy('id', 'asc')
-                ->get();
-        }elseif ( $request->has('field', 'order') ){
+            $clients   = $this->client->where('name', 'ILIKE', '%'.$parameter.'%')->orwhere('address', 'ILIKE', '%'.$parameter.'%')->orwhere('address', 'ILIKE', '%'.$parameter.'%')->orwhere('contact', 'LIKE', '%'.$parameter.'%')->orderBy('id', 'asc')->get();
+        } elseif ( $request->has('field', 'order') ) {
             $field   = $request->field;
             $order   = $request->order;
             $clients = $this->client->orderBy($field, $order)->get();
 
-        }else{
+        } else {
             $clients = $this->client->orderBy('id', 'asc')->get();
         }
 
@@ -70,6 +65,7 @@ class ClientsController extends Controller
     {
         $attributes = $request->all();
         $this->client->create($attributes);
+
         return redirect()->route('clients.index');
     }
 
@@ -82,6 +78,7 @@ class ClientsController extends Controller
      */
     public function show(Client $client)   // Client::find($id)
     {
+
         //$client = $this->client->find($id);
         return view('client.show', compact('client'));
     }
@@ -95,7 +92,14 @@ class ClientsController extends Controller
      */
     public function edit($id)
     {
+        try{
+            $this->authorize('update', Client::class);
+        }catch (Exception $e){
+            flash()->warning('Alert: Unauthorised Access');
+            return redirect()->route('clients.index');
+        }
         $client = $this->client->find($id);
+
         return view('client.edit', compact('client'));
     }
 
@@ -112,6 +116,7 @@ class ClientsController extends Controller
         $attributes = $request->all();
         $client     = $this->client->find($id);
         $client->update($attributes);
+
         return redirect()->route('clients.index');
     }
 
@@ -125,10 +130,12 @@ class ClientsController extends Controller
     public function destroy($id)
     {
         $this->client->find($id)->delete();
+
         return redirect()->route('clients.index');
     }
 
-    public function exportExcel(){
-        return Excel::download(new ClientsExport,'invoice.xlsx');
+    public function exportExcel()
+    {
+        return Excel::download(new ClientsExport, 'invoice.xlsx');
     }
 }
