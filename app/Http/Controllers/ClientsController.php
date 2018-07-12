@@ -31,7 +31,13 @@ class ClientsController extends Controller
     {
         if ( $request->has('parameter') ) {
             $parameter = $request->parameter;
-            $clients   = $this->client->where('name', 'ILIKE', '%'.$parameter.'%')->orwhere('address', 'ILIKE', '%'.$parameter.'%')->orwhere('address', 'ILIKE', '%'.$parameter.'%')->orwhere('contact', 'LIKE', '%'.$parameter.'%')->orderBy('id', 'asc')->get();
+            $clients   = $this->client
+                            ->where('name', 'ILIKE', '%'.$parameter.'%')
+                            ->orwhere('address', 'ILIKE', '%'.$parameter.'%')
+                            ->orwhere('address', 'ILIKE', '%'.$parameter.'%')
+                            ->orwhere('contact', 'LIKE', '%'.$parameter.'%')
+                            ->orderBy('id', 'asc')
+                            ->get();
         } elseif ( $request->has('field', 'order') ) {
             $field   = $request->field;
             $order   = $request->order;

@@ -26,7 +26,7 @@ class CreateTypeRequest extends FormRequest
     {
         return [
             //
-            'name' => ['required','unique:types,name',new UniqueName], //case insensitive problem
+            'name' => ['required','unique:types,name'], //case insensitive problem ,new UniqueName
             'rate' => 'required|numeric'
         ];
     }
