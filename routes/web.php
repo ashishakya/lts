@@ -13,7 +13,8 @@
 
 //Route::get('/', 'LoansController@index');
 
-use GuzzleHttp\Client;
+use App\Client;
+use App\Lts\Transformers\Api\ClientListTransformer;
 
 Route::get('/', 'Auth\LoginController@showLoginForm');
 
@@ -33,9 +34,8 @@ Route::group(
         Route::get('payments/{id}/interest', ['as' => 'payments.ind.interest', 'uses' => 'PaymentsController@updateIndividualInterest']);
         Route::get('loans/{id}/interest', ['as' => 'payments.all.interest', 'uses' => 'PaymentsController@updateAllInterest']);
         Route::get('logout', 'Auth\LoginController@logout')->name('logout');
-
-
         Route::get('excel', 'ClientsController@exportExcel')->name('clientExcel');
+
 
 
         Route::get('curl',function () {
@@ -45,9 +45,7 @@ Route::group(
             return $posts;
 
 
-        }
-
-        );
+        });
 
         Route::get(
             'dashboard',

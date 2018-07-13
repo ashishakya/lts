@@ -1,7 +1,7 @@
 @extends('layout.base')
 
 @section('content')
-	@include('flash::message');
+	@include('flash::message')
 	<h1>LIST OF LOAN TYPES</h1>
 	<hr>
 
