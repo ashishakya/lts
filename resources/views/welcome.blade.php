@@ -88,8 +88,7 @@
                     <a href="https://laravel-news.com">News</a>
                     <a href="https://forge.laravel.com">Forge</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
-                    <strong ><a href="{{route('loans.create')}}">Register New Loan Type</a></strong><br>
-                    <strong ><a href="{{route('loans.index')}}">Loan Types</a></strong>
+                    
                 </div>
             </div>
         </div>
