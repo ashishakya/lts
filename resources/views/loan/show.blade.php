@@ -1,9 +1,17 @@
-@extends('layout.base')
+{{--Client -> * Loans--}}
 
+@extends('layout.base')
 @section('content')
 
-<h1>This is show.blade.php</h1>
-<hr>
-<h1><a href="{{route('loans.edit',$loan->id)}}">{{$loan->type}} Loan</a></h1>
+    {{--Table:Client's Detail:--}}
+    @include('loan.partials.clientDetail')
 
-@endsection('content')
+    <hr>
+
+    <h3>LOAN DETAILS</h3>
+
+    {{--Table:Clients's * loans--}}
+    @include('loan.partials.loanOfClient')
+
+
+@endsection
