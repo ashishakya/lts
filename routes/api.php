@@ -40,7 +40,6 @@ Route::get('app/general/data',function (){
     $data = json_decode($body);
     $districts = $data->data->districts;
     foreach ($districts as $district) {
-
         echo $district-> code . ' ' . $district->name . '<br>';
     }
 });
