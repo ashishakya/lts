@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 
 /*
@@ -13,34 +14,13 @@ use Illuminate\Routing\Router;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
+/** @var Route $route */
+$route->post('login', 'RegisterController@login');
 
-Route::middleware('auth:api')->get(
+$route->middleware('auth:api')->get(
     '/user',
     function (Request $request) {
         return $request->user();
     }
 );
-
-Route::group(
-    ['prefix' => 'clients'],
-    function (Router $route) {
-        $route->get('', 'ClientController@clientList');
-        $route->post('', 'ClientController@create');
-        $route->get('/{id}', 'ClientController@clientDetail');
-        $route->patch('/{id}', 'ClientController@update');
-        $route->delete('/{id}', 'ClientController@delete');
-    }
-);
-
-Route::get('app/general/data',function (){
-    $client = new \GuzzleHttp\Client();
-    $uri = 'http://sidalg.staging.yipl.com.np/api/app/general/data';
-    $res = $client->request('GET',$uri);
-    $body = $res->getBody()->getContents();
-    $data = json_decode($body);
-    $districts = $data->data->districts;
-    foreach ($districts as $district) {
-        echo $district-> code . ' ' . $district->name . '<br>';
-    }
-});
 

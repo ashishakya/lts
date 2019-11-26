@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -33,9 +34,9 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function map()
+    public function map(Router $route)
     {
-        $this->mapApiRoutes();
+        $this->mapApiRoutes($route);
 
         $this->mapWebRoutes();
 
@@ -61,14 +62,26 @@ class RouteServiceProvider extends ServiceProvider
      *
      * These routes are typically stateless.
      *
+     * @param Router $route
+     *
      * @return void
      */
-    protected function mapApiRoutes()
+    protected function mapApiRoutes(Router $route)
     {
-        Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace . '\Api')
-             ->group(base_path('routes/api.php'));
+        $route->group(
+            [
+                'prefix'     => 'api/v2',
+                'middleware' => 'api',
+                'namespace'  => sprintf('%s\Api\spa', $this->namespace),
+            ],
+            function ($route) {
+                require base_path('routes/api.php');
+            }
+        );
+//        Route::prefix('api')
+//             ->middleware('api')
+//             ->namespace($this->namespace.'\Api')
+//             ->group(base_path('routes/api.php'));
 
 
     }

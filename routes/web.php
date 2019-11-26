@@ -37,15 +37,18 @@ Route::group(
         Route::get('excel', 'ClientsController@exportExcel')->name('clientExcel');
 
 
+        Route::get(
+            'curl',
+            function () {
+                $client = new Client();
+                $res    = $client->request('GET', 'form.valet/transform/post');
+                $posts  = $res->getBody();
 
-        Route::get('curl',function () {
-            $client = new Client();
-            $res = $client->request('GET', 'form.valet/transform/post');
-            $posts =  $res->getBody();
-            return $posts;
+                return $posts;
 
 
-        });
+            }
+        );
 
         Route::get(
             'dashboard',
@@ -72,3 +75,17 @@ Route::group(
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(
+    ([
+        'prefix' => 'v2',
+    ]),
+    function () {
+        Route::get('/login',
+            function () {
+                return view('spa.auth.login');
+            }
+        );
+    }
+);
+
