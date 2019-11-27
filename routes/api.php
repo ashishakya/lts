@@ -15,7 +15,7 @@ use Illuminate\Routing\Router;
 |
  */
 /** @var Route $route */
-$route->post('login', 'RegisterController@login');
+$route->post('login', 'RegisterController@login')->name('spa.login');
 
 $route->middleware('auth:api')->get(
     '/user',
