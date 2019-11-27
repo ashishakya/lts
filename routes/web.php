@@ -81,11 +81,14 @@ Route::group(
         'prefix' => 'v2',
     ]),
     function () {
-        Route::get('/login',
-            function () {
+        Route::get('/login',function () {
                 return view('spa.auth.login');
             }
         );
+
+        Route::get('/', function(){
+            return view('spa.base');
+        })->middleware('auth:api');
     }
 );
 
